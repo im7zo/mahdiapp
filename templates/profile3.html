@@ -1,0 +1,570 @@
+<style>
+    @font-face {
+        font-family: 'l3ba';
+        src: url('/font/l3ba.otf') format('truetype');
+    }
+    @font-face {
+        font-family: 'kd';
+        src: url('/font/kd.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: 'sred';
+        src: url('/font/sred.ttf') format('truetype');
+    }
+
+    /* خصائص عامة للتحجيم ولمنع التحديد وضعت بدون فرض الخط العام */
+    .profile-content, .profile-content * {
+        -webkit-tap-highlight-color: transparent;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        font-family: 'l3ba', sans-serif !important;
+    }
+
+    /* استثناء الأيقونات والـ SVG داخل كودك لكي تظل سليمة تماماً */
+    .profile-content svg, .profile-content img {
+        font-family: initial !important;
+    }
+
+    #notification-container {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        width: 90%;
+        max-width: 440px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        pointer-events: none;
+        font-family: 'l3ba', sans-serif !important;
+    }
+
+    .notification {
+        background-color: #f2eee3;
+        color: #36461d;
+        font-size: 1.15rem;
+        font-weight: 900;
+        padding: 14px 20px;
+        border-radius: 18px;
+        border: 3px solid #36461d;
+        box-shadow: 0 6px 0px #36461d, 0 10px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        pointer-events: auto;
+        animation: slideDown 0.3s ease forwards, fadeOut 0.3s ease 2.7s forwards;
+    }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; transform: translateY(0); }
+        to { opacity: 0; transform: translateY(-20px); }
+    }
+
+    .profile-content {
+        width: 90%;
+        max-width: 440px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        padding: 25px 0 80px 0;
+        direction: rtl;
+        text-align: right;
+    }
+
+    .profile-card {
+        width: 100%;
+        background-color: #f2eee3;
+        border: 3px solid #36461d;
+        border-radius: 24px;
+        padding: 25px 20px;
+        color: #36461d;
+        box-shadow: 0 6px 0px #36461d;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+
+    .avatar-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 18px;
+    }
+
+    .user-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 3px solid #36461d;
+        object-fit: cover;
+        background-color: #fbf6ec;
+        margin-bottom: 8px;
+        box-shadow: 0 4px 0px #36461d;
+    }
+
+    .avatar-edit-text {
+        font-size: 0.95rem;
+        color: #556b2f;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .avatar-edit-text:hover {
+        text-decoration: underline;
+    }
+
+    .form-group-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        margin-bottom: 5px;
+    }
+
+    .input-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 8px;
+        direction: rtl;
+        text-align: right;
+    }
+
+    .input-label {
+        font-size: 1.05rem;
+        color: #36461d;
+        font-weight: 900;
+        text-align: right;
+        width: 100%;
+        display: block;
+    }
+
+    .input-box {
+        width: 100%;
+        background-color: #fbf6ec;
+        border: 3px solid #36461d;
+        border-radius: 22px;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 4px 0px #36461d;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+        direction: rtl;
+    }
+
+    .input-box:focus-within {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0px #36461d;
+    }
+
+    .input-box input, .input-box textarea {
+        width: 100%;
+        background: transparent;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        color: #36461d;
+        text-align: right !important;
+        direction: rtl !important;
+        resize: none;
+    }
+
+    .input-box input[type="email"] {
+        direction: ltr !important;
+        text-align: left !important;
+    }
+
+    .input-box textarea {
+        min-height: 60px;
+    }
+
+    .input-box input::placeholder, .input-box textarea::placeholder {
+        color: #8c8c8c;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .phone-box {
+        direction: rtl;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        background-color: #fbf6ec;
+        border: 3px solid #36461d;
+        border-radius: 22px;
+        padding: 0 14px;
+        box-shadow: 0 4px 0px #36461d;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+        overflow: hidden;
+    }
+
+    .phone-box:focus-within {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0px #36461d;
+    }
+
+    .phone-prefix {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-family: 'kd', sans-serif !important;
+        font-size: 1rem;
+        color: #36461d;
+        background-color: transparent;
+        flex-shrink: 0;
+        direction: ltr;
+        padding-left: 10px;
+        border-left: 1px solid rgba(54, 70, 29, 0.2);
+        margin-left: 10px;
+    }
+
+    .iraq-flag {
+        width: 22px;
+        height: 15px;
+        border-radius: 2px;
+        object-fit: cover;
+        display: inline-block;
+    }
+
+    .phone-box input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 14px 0;
+        font-size: 1rem;
+        color: #36461d;
+        outline: none;
+        box-shadow: none;
+        text-align: right !important;
+        direction: ltr !important;
+        min-width: 0;
+    }
+
+    .phone-box input::placeholder {
+        color: #8c8c8c;
+        text-align: right;
+        direction: rtl;
+    }
+
+    .custom-btn {
+        width: 100%;
+        background-color: #586e3b;
+        border: 3px solid #36461d;
+        border-radius: 20px;
+        padding: 14px;
+        font-size: 1.1rem;
+        color: #ffffff;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: 0 5px 0px #36461d;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 5px;
+    }
+
+    .custom-btn svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+
+    .custom-btn:active {
+        transform: translateY(3px);
+        box-shadow: 0 2px 0px #36461d;
+    }
+
+    .card-section-title {
+        font-family: 'sred', sans-serif !important;
+        font-size: 1.8rem;
+        color: #36461d;
+        font-weight: 900;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+    .card-section-desc {
+        font-size: 0.95rem;
+        color: #556b2f;
+        margin-bottom: 18px;
+        font-weight: 700;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    .restore-btn {
+        width: 100%;
+        background-color: #fbf6ec;
+        border: 3px solid #36461d;
+        border-radius: 20px;
+        padding: 14px;
+        font-size: 1.05rem;
+        color: #36461d;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: 0 5px 0px #36461d;
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .restore-btn svg {
+        width: 20px;
+        height: 20px;
+        fill: #36461d;
+    }
+
+    .restore-btn:active {
+        transform: translateY(3px);
+        box-shadow: 0 2px 0px #36461d;
+    }
+
+    .delete-confirm-box {
+        display: none;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 3px dashed rgba(184, 50, 50, 0.3);
+        width: 100%;
+        animation: slideDown 0.2s ease forwards;
+    }
+
+    .delete-confirm-text {
+        font-size: 0.95rem;
+        color: #b83232;
+        font-weight: 900;
+        text-align: center;
+    }
+
+    .delete-actions-row {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
+</style>
+
+<div id="notification-container"></div>
+
+<div class="profile-content">
+
+    <!-- بطاقة بيانات المستخدم الشخصية -->
+    <div class="profile-card">
+        <div class="avatar-section">
+            <img src="https://files.catbox.moe/0rnwon.jpg" alt="صورة المستخدم" class="user-avatar" id="db-user-avatar">
+            <span class="avatar-edit-text" onclick="showNotification('خاصية تغيير الأفاتار قيد التطوير')">تعديل الصورة أو الأبافاتار *</span>
+        </div>
+
+        <div class="form-group-container">
+            <div class="input-wrapper">
+                <label class="input-label">الاسم <span style="color: #b83232;">*</span></label>
+                <div class="input-box">
+                    <input type="text" id="db-user-name" placeholder="أدخل اسمك الكامل">
+                </div>
+            </div>
+
+            <div class="input-wrapper">
+                <label class="input-label">البريد الإلكتروني <span style="color: #b83232;">*</span></label>
+                <div class="input-box">
+                    <input type="email" id="db-user-email" placeholder="example@email.com">
+                </div>
+            </div>
+
+            <div class="input-wrapper">
+                <label class="input-label">معرف تيليجرام (Telegram ID)</label>
+                <div class="input-box">
+                    <input type="text" id="db-telegram-id" placeholder="معرف المستخدم" readonly style="color: #556b2f; font-weight: bold;">
+                </div>
+            </div>
+
+            <div class="input-wrapper">
+                <label class="input-label">السيرة الذاتية</label>
+                <div class="input-box">
+                    <textarea id="db-user-bio" placeholder="اكتب نبذة عنك..."></textarea>
+                </div>
+            </div>
+
+            <div class="input-wrapper">
+                <label class="input-label">رقم الهاتف</label>
+                <div class="phone-box">
+                    <div class="phone-prefix">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Flag_of_Iraq.svg" alt="العراق" class="iraq-flag">
+                        <span>+964</span>
+                    </div>
+                    <input type="tel" id="db-user-phone" placeholder="7xxxxxxxx" maxlength="10">
+                </div>
+            </div>
+        </div>
+
+        <button class="custom-btn" onclick="saveProfileChanges()" style="margin-top: 15px;">
+            <span>حفظ التعديلات</span>
+        </button>
+
+        <button class="custom-btn" onclick="logoutAccount()" style="background-color: #fbf6ec; color: #36461d; border: 3px solid #36461d; box-shadow: 0 5px 0px #36461d; margin-top: 10px;">
+            <svg viewBox="0 0 24 24"><path d="M16 13v-2H7V8l-5 4 5 4v-3h9zM20 3h-9c-1.1 0-2 .9-2 2v4h2V5h9v14h-9v-4H9v4c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+            <span>تسجيل الخروج</span>
+        </button>
+    </div>
+
+    <!-- بطاقة استعادة المشتريات -->
+    <div class="profile-card">
+        <div class="card-section-title">استعادة المشتريات</div>
+        <div class="card-section-desc">إذا سبق أن اشتريت منتج من المتجر، استخدم هذا الزر لإعادة مزامنة الشراء مع حسابك الحالي.</div>
+        
+        <button class="restore-btn" onclick="showNotification('قريـباً سيـتم إضـافته، تـحت التـطوير حالـياً .');">
+            <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+            <span>استعادة المشتريات</span>
+        </button>
+    </div>
+
+    <!-- بطاقة حذف الحساب -->
+    <div class="profile-card">
+        <div class="card-section-title" style="color: #b83232;">حذف الحساب</div>
+        <div class="card-section-desc">سيتم حذف حسابك وبياناتك المرتبطة به نهائياً من التطبيق.</div>
+        
+        <button class="custom-btn" id="delete-trigger-btn" onclick="toggleDeleteConfirm(true)" style="background-color: #b83232; border: 3px solid #36461d; box-shadow: 0 5px 0px #36461d;">
+            <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            <span>حذف الحساب</span>
+        </button>
+
+        <div class="delete-confirm-box" id="delete-confirm-box">
+            <div class="delete-confirm-text">هل أنت متأكد تماماً؟ لا يمكن التراجع عن هذا الإجراء!</div>
+            <div class="delete-actions-row">
+                <button class="custom-btn" onclick="executeDeleteAccount()" style="background-color: #b83232; border: 3px solid #36461d; box-shadow: 0 5px 0px #36461d; margin-top: 0; flex: 1; font-size: 0.95rem;">
+                    <span>نعم، حذف نهائياً</span>
+                </button>
+                <button class="custom-btn" onclick="toggleDeleteConfirm(false)" style="background-color: #fbf6ec; color: #36461d; border: 3px solid #36461d; box-shadow: 0 5px 0px #36461d; margin-top: 0; flex: 1; font-size: 0.95rem;">
+                    <span>إلغاء</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function showNotification(message) {
+        const container = document.getElementById('notification-container');
+        if (!container) return;
+        const notif = document.createElement('div');
+        notif.className = 'notification';
+        notif.innerText = message;
+        container.appendChild(notif);
+        setTimeout(() => { notif.remove(); }, 3000);
+    }
+
+    async function loadUserProfile() {
+        // أولاً: جلب بيانات المستخدم المباشرة من Telegram Web App SDK (إن وجد)
+        const tg = window.Telegram?.WebApp;
+        const tgUser = tg?.initDataUnsafe?.user;
+
+        if (tgUser) {
+            // تعبئة الاسم ومعرف تيليجرام مباشرة من حساب المستخدم في تيليجرام
+            const fullName = [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ');
+            if (fullName) {
+                document.getElementById('db-user-name').value = fullName;
+            }
+            if (tgUser.id) {
+                document.getElementById('db-telegram-id').value = tgUser.id;
+            }
+            // إذا توفرت صورة شخصية من تيليجرام (إن كانت مدعومة في النسخة)
+            if (tgUser.photo_url) {
+                document.getElementById('db-user-avatar').src = tgUser.photo_url;
+            }
+        }
+
+        // ثانياً: جلب بقية البيانات المحفوظة في قاعدة البيانات (مثل البريد، الهاتف، السيرة)
+        try {
+            let response = await fetch('/api/get-user-profile');
+            if (response.ok) {
+                let data = await response.json();
+                if (data) {
+                    // إذا كان الاسم مسجلاً مسبقاً في قاعدة البيانات، نعطيه الأولوية أو نتركه
+                    if (data.name && !tgUser) {
+                        document.getElementById('db-user-name').value = data.name;
+                    }
+                    if (data.email) {
+                        document.getElementById('db-user-email').value = data.email;
+                    }
+                    if (data.phone) {
+                        document.getElementById('db-user-phone').value = data.phone;
+                    }
+                    if (data.bio) {
+                        document.getElementById('db-user-bio').value = data.bio;
+                    }
+                    if (data.avatar && !tgUser?.photo_url) {
+                        document.getElementById('db-user-avatar').src = data.avatar;
+                    }
+                }
+            }
+        } catch (e) {
+            console.log('Error loading profile data from server:', e);
+        }
+    }
+
+    async function saveProfileChanges() {
+        let name = document.getElementById('db-user-name').value;
+        let email = document.getElementById('db-user-email').value;
+        let phone = document.getElementById('db-user-phone').value;
+        let bio = document.getElementById('db-user-bio').value;
+        const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
+        let telegramId = tgUser ? tgUser.id : null;
+
+        try {
+            let response = await fetch('/api/update-profile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, phone, bio, telegram_id: telegramId })
+            });
+            let result = await response.json();
+            if (result.success) {
+                showNotification('تم حفظ التعديلات بنجاح');
+            } else {
+                showNotification('حدث خطأ أثناء الحفظ');
+            }
+        } catch (e) {
+            showNotification('فشل الاتصال بالخادم');
+        }
+    }
+
+    function logoutAccount() {
+        showNotification('جاري تسجيل الخروج...');
+        setTimeout(() => { window.location.href = '/logout'; }, 1000);
+    }
+
+    function toggleDeleteConfirm(show) {
+        const confirmBox = document.getElementById('delete-confirm-box');
+        const triggerBtn = document.getElementById('delete-trigger-btn');
+        if (show) {
+            confirmBox.style.display = 'flex';
+            triggerBtn.style.display = 'none';
+        } else {
+            confirmBox.style.display = 'none';
+            triggerBtn.style.display = 'flex';
+        }
+    }
+
+    function executeDeleteAccount() {
+        showNotification('جاري حذف الحساب...');
+        setTimeout(() => { window.location.href = '/delete-account'; }, 1000);
+    }
+
+    window.onload = loadUserProfile;
+</script>

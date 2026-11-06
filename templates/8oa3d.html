@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كيف تلعب - تحـداهم</title>
+    <style>
+        @font-face {
+            font-family: 'mrb3';
+            src: url('/font/mrb3.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'kd';
+            src: url('/font/kd.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'l3ba';
+            src: url('/font/l3ba.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'sred';
+            src: url('/font/sred.ttf') format('truetype');
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: #dfd6ad;
+            color: #dfd6ad;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 20px 6px;
+            direction: rtl;
+            text-align: right;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* حاوية المحتوى بنفس مقاسات العرض الواسعة (98% وعدم الانكماش) */
+        .rules-content, .action-buttons-container, .back-btn-container {
+            width: 98%;
+            max-width: 780px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .rules-header {
+            text-align: center;
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        .rules-header h1 {
+            font-family: 'sred', sans-serif;
+            font-size: 2.2rem;
+            color: #36461d;
+            margin: 0 0 8px 0;
+            font-weight: 900;
+        }
+
+        .rules-header p {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1rem;
+            color: #77775F;
+            margin: 0;
+            line-height: 1.6;
+            font-weight: 600;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .rules-card {
+            background-color: #f7f2d4;
+            border: 3px solid #36461d;
+            border-radius: 24px;
+            padding: 25px 20px;
+            width: 98%;
+            max-width: 780px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 0px #36461d;
+            color: #36461d;
+            font-family: 'l3ba', sans-serif;
+            text-align: right;
+        }
+
+        .rules-card h2 {
+            font-family: 'sred', sans-serif;
+            font-size: 1.4rem;
+            color: #272f18;
+            margin: 0 0 12px 0;
+            font-weight: 900;
+            text-align: right;
+        }
+
+        .rules-card > p {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #77775F;
+            margin: 0 0 15px 0;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .rule-step-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            text-align: right;
+        }
+        
+        .rule-step-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .rule-step-badge {
+            min-width: 32px;
+            height: 32px;
+            background-color: #fef9db;
+            border: 2px solid #36461d;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'kd', sans-serif;
+            font-size: 1rem;
+            color: #36461d;
+            font-weight: 900;
+            box-shadow: 0 3px 0px #36461d;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .rule-step-text {
+            text-align: right;
+            flex: 1;
+        }
+
+        .rule-step-text h3 {
+            font-family: 'sred', sans-serif;
+            font-size: 1.1rem;
+            color: #272f18;
+            margin: 0 0 4px 0;
+            font-weight: 900;
+        }
+
+        .rule-step-text p {
+            font-family: 'l3ba', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #77775F;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .inner-sub-card {
+            background-color: #fef9db;
+            border: 2px solid #36461d;
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            text-align: right;
+            box-shadow: 0 3px 0px rgba(54, 70, 29, 0.15);
+        }
+        
+        .inner-sub-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .inner-sub-card h4 {
+            font-family: 'sred', sans-serif;
+            font-size: 1.1rem;
+            color: #272f18;
+            margin: 0 0 4px 0;
+            font-weight: 900;
+        }
+
+        .inner-sub-card p {
+            font-family: 'l3ba', sans-serif;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            color: #77775F;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .action-buttons-container {
+            margin: 15px auto 20px auto;
+        }
+
+        .btn-start-now {
+            position: relative;
+            width: 100%;
+            background-color: #fef9db;
+            color: #36461d;
+            border: 2.5px solid #36461d;
+            padding: 14px 20px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-family: 'kd', sans-serif;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 5px 0px #36461d;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .btn-start-now:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+
+        .back-btn-container {
+            margin-bottom: 20px;
+        }
+
+        .back-btn {
+            width: 100%;
+            background-color: #586e3b;
+            border: 2.5px solid #36461d;
+            border-radius: 18px;
+            padding: 14px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.2rem;
+            color: #ffffff;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 0px #36461d;
+            text-decoration: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .back-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="rules-content">
+
+        <div class="rules-header">
+            <h1>
+                <span style="color: #333a22;">كـيف</span> 
+                <span style="color: #333a22;">تـلعب</span> 
+                <span style="color: #333a22;">تحـداهم؟</span>
+            </h1>
+            <p>
+                <span style="color: #36461d;">صـفحة مخـتصرة</span> 
+                <span style="color: #36461d;">توضّـح الفـكرة الأسـاسية للعـبة،</span> 
+                <span style="color: #36461d;">خـطوات البـدء،</span> 
+                <span style="color: #36461d;">ووسـائل المسـاعدة الـمتاحة لـكم أثنـاء اللـعب .</span>
+            </p>
+        </div>
+        
+    </div>
+
+
+        <div class="rules-card">
+            <h2>عـن اللـعبة</h2>
+            <p>تحـداهم هـي لعـبة أسـئلة تفـاعلية مسـتوحاة مـن لعـبة Jeopardy لكـن بطـابع عـربي بسـيط وممـتع، مصـممة للجـلسات العـائلية والطـلعات مـع الأصـدقاء .</p>
+            <p>الفـكرة الأسـاسية: فريـقين يتـنافسون علـى لـوحة أسـئلة مـن فئات مخـتلفة، كـل سـؤال له نـقاط، والفـريق الأعـلى نقـاطًا فـي نهـاية الجـولة يكـون هـو الفـائز .</p>
+        </div>
+
+        <div class="rules-card">
+            <h2>خطـوات اللـعب</h2>
+            
+            <div class="rule-step-item">
+                <div class="rule-step-badge">1</div>
+                <div class="rule-step-text">
+                    <h3>جـهّز فريـقك</h3>
+                    <p>اجمـع أصـحابك أو عائـلتك، وكـونوا فريقـين متـقابلين، وكـل فـريق يـختار متـحدث أو قـائد يضـغط عـلى الإجـابات .</p>
+                </div>
+            </div>
+
+            <div class="rule-step-item">
+                <div class="rule-step-badge">2</div>
+                <div class="rule-step-text">
+                    <h3>اختـاروا الفـئات</h3>
+                    <p>كـل فريـق يخـتار الفئات اللـي تناسـبه مـن المـوجودة فـي اللـعبة، عـشان تـكون الأسـئلة قريـبة مـن اهتمـاماتكم .</p>
+                </div>
+            </div>
+
+            <div class="rule-step-item">
+                <div class="rule-step-badge">3</div>
+                <div class="rule-step-text">
+                    <h3>اربـط اللـعبة عـلى الشـاشة</h3>
+                    <p>اربـط اللـعبة على التـلفزيون أو البروجيـكتور، وتـأكد أن الجـميع يشوف اللـوحة بوضـوح قـبل ما تبـدأ الجـولة الأولـى .</p>
+                </div>
+            </div>
+
+            <div class="rule-step-item">
+                <div class="rule-step-badge">4</div>
+                <div class="rule-step-text">
+                    <h3>ابـدأوا التـحدي</h3>
+                    <p>اختـاروا الأسـئلة حـسب النـقاط، جاوبـوا بأسـرع وقـت، وراقـبوا لوحـة النـقاط عـشان تعـرفون مـين متـقدم أثـناء اللـعب .</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="rules-card">
+            <h2>وسـائل المسـاعدة</h2>
+            <p>تكـدرون تسـتخدمون وسـائل المـساعدة مرة أو أكـثر حـسب إعـداداتكم للجـلسة، علـمود تضـيفون عنـصر المـفاجأة والرجـعة فـي النتـيجة</p>
+            
+            <div class="inner-sub-card">
+                <h4>مضـاعفة النـقاط</h4>
+                <p>ضاعـفوا نقـاط السـؤال الحـالي إذا كـنتم واثقـين مـن إجابتـكم، علـمود تـزيد فـرص تقـدمكم فـي النتـيجة .</p>
+            </div>
+
+            <div class="inner-sub-card">
+                <h4>اتـصل بصـديق</h4>
+                <p>اتصـلوا بصـديق يسـاعدكم فـي سؤال واحـد فقط خـلال وقـت محدد، بـدون مـا يشـوف باقـي الأسـئلة فـي اللـعبة .</p>
+            </div>
+
+            <div class="inner-sub-card">
+                <h4>الروليـت</h4>
+                <p>أداة حـظ، تخـلي النتـيجة تتـحرك بشـكل غـير متـوقع، وتضـيف حمـاس وتـوتر للجـولة .</p>
+            </div>
+
+            <div class="inner-sub-card">
+                <h4>إجابـتين</h4>
+                <p>تعطـيكم فرصـتين للإجـابة على نـفس السـؤال، مفـيدة إذا كنـتم محـتارين بـين خيـارين قريـبين مـن بعـض .</p>
+            </div>
+
+            <div class="inner-sub-card">
+                <h4>بلـوك</h4>
+                <p>امنـعوا الفـريق الثـاني مـن استـخدام إحـدى وسـائل المسـاعدة فـي لحـظة حسـاسة مـن اللـعبة .</p>
+            </div>
+
+            <div class="inner-sub-card">
+                <h4>الحـفرة</h4>
+                <p>أداة هجـومية، جاوبـوا صح واخـصموا جـزء مـن نقـاط الفـريق الثـاني، كأنـكم حفتـروا لهـم حفـرة فـي النتـيجة .</p>
+            </div>
+
+            <div class="inner-sub-card">
+                <h4>ابحـث</h4>
+                <p>عنـدكم وقـت قـصـير (مثل 15 ثانية) تبـحثون عن الإجـابة من مصـدر خارجـي، إذا كـانت أداة البحـث مفـعلة فـي الجـلسة .</p>
+            </div>
+        </div>
+
+        <div class="action-buttons-container">
+            <a href="/" class="btn-start-now">بـدء اللعـب</a>
+        </div>
+
+    </div>
+
+    <!-- زر العودة -->
+    <div class="back-btn-container">
+        <a href="/" class="back-btn" oncontextmenu="return false;">
+            <span>←</span> الـعودة
+        </a>
+    </div>
+
+</body>
+</html>

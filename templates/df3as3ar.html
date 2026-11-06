@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة الأسعار والتفعيل</title>
+    <style>
+        @font-face {
+            font-family: 'mrb3';
+            src: url('/font/mrb3.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'kd';
+            src: url('/font/kd.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'l3ba';
+            src: url('/font/l3ba.otf') format('truetype');
+        }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #36461d;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    *, *:focus, *:active {
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent;
+    }
+        /* توحيد الخط الافتراضي لكل الصفحة */
+        .prices-page-wrapper, .prices-page-wrapper *, .modal-overlay, .modal-overlay * {
+            font-family: 'kd', sans-serif !important;
+        }
+
+        .prices-page-wrapper {
+            width: 100%;
+            min-height: 100vh;
+            background-color: #36461d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 16px 80px 16px;
+            box-sizing: border-box;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+
+        #notification-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .notification {
+            background-color: #f2eee3;
+            color: #36461d;
+            font-size: 1rem;
+            padding: 12px 18px;
+            border-radius: 16px;
+            border: 2.5px solid #36461d;
+            box-shadow: 0 4px 0px #36461d, 0 8px 16px rgba(0,0,0,0.15);
+            text-align: center;
+            pointer-events: auto;
+            animation: slideDown 0.3s ease forwards, fadeOut 0.3s ease 2.7s forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* حاوية المحتوى الرئيسية */
+        .prices-content {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            padding: 10px 0 40px 0;
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 768px) {
+            .prices-content {
+                max-width: 650px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .prices-content {
+                max-width: 850px;
+            }
+        }
+
+        /* عنوان القسم الرئيسي */
+        .section-main-title {
+            font-family: 'l3ba', sans-serif !important;
+            font-size: 2.5rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #36461d;
+            margin-bottom: 2px;
+            text-align: center;
+        }
+
+        .section-main-desc {
+            font-family: 'kd', sans-serif !important;
+            font-size: 0.95rem;
+            color: #f2eee3;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* صندوق رصيد الحالي */
+        .current-balance-box {
+        width: 85%;
+        margin: 0 auto;
+        background-color: #2b3817;
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        border-radius: 20px;
+        padding: 16px 10px;
+        text-align: center;
+        color: #f5f2e0;
+        box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
+        .current-balance-title {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            margin-bottom: 2px;
+        }
+        .current-balance-value {
+            font-family: 'l3ba', sans-serif !important;
+            font-size: 2rem;
+            font-weight: 900;
+        }
+
+        /* فاصل الأقسام */
+        .divider-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: 15px;
+            color: #f2eee3;
+            font-family: 'l3ba', sans-serif !important;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 15px 0 5px 0;
+        }
+
+        .divider-title::before, 
+        .divider-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background-color: rgba(242, 238, 227, 0.3);
+        }
+
+        /* شبكة الباقات */
+        .packages-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        @media (min-width: 1024px) {
+            .packages-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .packages-full {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 1024px) {
+            .packages-full {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* كارت الباقة الأساسي */
+        .pkg-card {
+            background-color: #f5f2e0;
+            border: 2.5px solid #36461d;
+            border-radius: 26px;
+            padding: 18px 14px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 6px 0px #36461d, 0 10px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .pkg-card-full {
+            background-color: #f5f2e0;
+            border: 2.5px solid #36461d;
+            border-radius: 26px;
+            padding: 22px 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 6px 0px #36461d, 0 10px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* الشارة العلوية */
+        .pkg-badge {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            background-color: #36461d;
+            color: #f5f2e0;
+            font-size: 0.75rem;
+            padding: 4px 16px;
+            border-radius: 12px;
+            border: 2px solid #36461d;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        .pkg-badge-side {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background-color: #36461d;
+            color: #f5f2e0;
+            font-size: 0.75rem;
+            padding: 3px 12px;
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        /* النصوص داخل الباقة */
+        .pkg-title {
+            font-size: 1.2rem;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+            margin-top: 8px;
+        }
+
+        .pkg-price {
+            font-family: 'l3ba', sans-serif !important;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #2e3c17;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+
+        .pkg-price span {
+            font-size: 1.1rem;
+            font-family: 'kd', sans-serif !important;
+        }
+
+        .pkg-desc {
+            font-size: 0.8rem;
+            color: #55503c;
+            margin-bottom: 15px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        /* زر الشراء داخل الكارت */
+        .pkg-btn {
+            width: 100%;
+            background-color: #36461d;
+            color: #f5f2e0;
+            border: 2px solid #233118;
+            padding: 10px;
+            border-radius: 18px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 0px #233118;
+            transition: transform 0.1s ease;
+        }
+
+        .pkg-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #233118;
+        }
+
+        /* تنسيق خاص للباقات الطولية */
+        .pkg-card-full .pkg-title {
+            align-self: flex-start;
+            font-size: 1.4rem;
+            margin-top: 0;
+        }
+
+        .pkg-card-full .pkg-price {
+            align-self: flex-start;
+            font-size: 2.4rem;
+            text-align: right;
+        }
+
+        .pkg-card-full .pkg-desc {
+            align-self: flex-start;
+            text-align: right;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        /* صندوق كود الاستبدال السفلي */
+        .redeem-bottom-box {
+            width: 100%;
+            background-color: #f5f2e0;
+            border: 2.5px solid #36461d;
+            border-radius: 20px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 6px 0px #36461d, 0 10px 15px rgba(0, 0, 0, 0.15);
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        .redeem-bottom-title {
+            font-size: 1.05rem;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+        .redeem-bottom-desc {
+            font-size: 0.75rem;
+            color: #665f42;
+            margin-bottom: 10px;
+        }
+        .redeem-input-row {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .redeem-input {
+            flex: 1;
+            min-width: 0;
+            background-color: #ffffff;
+            border: 2px solid #36461d;
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .redeem-submit-btn {
+            background-color: #36461d;
+            color: #f5f2e0;
+            border: 2px solid #233118;
+            border-radius: 12px;
+            padding: 0 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        #redeem-status {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        /* نافذة تفعيل الباقة (Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+        .modal-content {
+            background-color: #fdfcf0;
+            border: 2.5px solid #36461d;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 400px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            direction: rtl;
+            text-align: right;
+            box-sizing: border-box;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1.5px solid rgba(54, 70, 29, 0.15);
+            padding-bottom: 8px;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #36461d;
+        }
+        .modal-pkg-preview {
+            background-color: #f2eee3;
+            border: 2px solid #36461d;
+            border-radius: 14px;
+            padding: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-purchase-code-section {
+            background-color: #f2eee3;
+            border: 2px solid #36461d;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #36461d;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .code-input-row {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .code-input {
+            flex: 1;
+            min-width: 0;
+            background: #fff;
+            border: 1.5px solid #36461d;
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-size: 0.85rem;
+            outline: none;
+        }
+        .verify-btn {
+            background: #36461d;
+            color: #f5f2e0;
+            border: none;
+            border-radius: 10px;
+            padding: 0 12px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .modal-free-note {
+            background-color: #f2eee3;
+            border: 1.5px dashed #36461d;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #555;
+        }
+        .modal-confirm-btn {
+            width: 100%;
+            background-color: #36461d;
+            color: #f5f2e0;
+            border: 2.5px solid #233118;
+            border-radius: 14px;
+            padding: 12px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            box-shadow: 0 3px 0px #233118;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="prices-page-wrapper">
+    <div id="notification-container"></div>
+
+    <div class="prices-content">
+        <!-- رصيدك الحالي -->
+        <div class="current-balance-box">
+            <div class="current-balance-title">رصيدك الحالي</div>
+            <div class="current-balance-value" id="current-balance-text">جاري التحميل...</div>
+        </div>
+
+        <h1 class="section-main-title">الأسعـار</h1>
+        <p class="section-main-desc">اختر الباقة اللي تناسبك وابدأ التحدي مع ربعك</p>
+
+        <!-- الباقات العادية -->
+        <div class="packages-grid">
+            <div class="pkg-card" onclick="openCheckout('باقة ألعاب', 'لعبة واحدة', 1)">
+                <div>
+                    <div class="pkg-title">لعبة واحدة</div>
+                    <div class="pkg-price">500 <span>د.ع</span></div>
+                    <div class="pkg-desc">تريد تجرب؟ ابدأ بلعبة واحدة</div>
+                </div>
+                <button class="pkg-btn">اشتر الآن</button>
+            </div>
+
+            <div class="pkg-card" onclick="openCheckout('باقة ألعاب', 'لعبتين', 2)">
+                <div>
+                    <div class="pkg-title">لعبتين</div>
+                    <div class="pkg-price">1000 <span>د.ع</span></div>
+                    <div class="pkg-desc">لعبتين بسعر 1000 د.ع فقط</div>
+                </div>
+                <button class="pkg-btn">اشتر الآن</button>
+            </div>
+
+            <div class="pkg-card" onclick="openCheckout('باقة ألعاب', '5 ألعاب', 5)">
+                <div>
+                    <div class="pkg-title">5 ألعاب</div>
+                    <div class="pkg-price">2000 <span>د.ع</span></div>
+                    <div class="pkg-desc">ألعاب بسعر أوفر - وفّر 500</div>
+                </div>
+                <button class="pkg-btn">اشتر الآن</button>
+            </div>
+
+            <div class="pkg-card" style="margin-top: 10px;" onclick="openCheckout('باقة ألعاب', '10 ألعاب', 10)">
+                <div class="pkg-badge">الأكثر طلباً</div>
+                <div>
+                    <div class="pkg-title" style="margin-top: 10px;">10 ألعاب</div>
+                    <div class="pkg-price">3500 <span>د.ع</span></div>
+                    <div class="pkg-desc">10 ألعاب بسعر أوفر - وفّر 1500</div>
+                </div>
+                <button class="pkg-btn">اشتر الآن</button>
+            </div>
+        </div>
+
+        <!-- 30 لعبة -->
+        <div class="pkg-card" style="width: 100%; margin-top: 5px;" onclick="openCheckout('باقة ألعاب', '30 لعبة', 30)">
+            <div class="pkg-badge">الأوفر</div>
+            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; text-align: right; padding: 5px 0;">
+                <div>
+                    <div class="pkg-title" style="font-size: 1.4rem;">30 لعبة</div>
+                    <div class="pkg-desc" style="margin-bottom: 0;">30 لعبة بسعر مميز - وفّر 7500</div>
+                </div>
+                <div class="pkg-price" style="font-size: 2.2rem; margin-bottom: 0;">7500 <span style="font-size: 1rem;">د.ع</span></div>
+            </div>
+            <button class="pkg-btn" style="margin-top: 15px;">اشتر الآن</button>
+        </div>
+
+        <!-- فاصل باقات غير محدودة -->
+        <div class="divider-title">باقات غير محدودة</div>
+
+        <div class="packages-full">
+            <div class="pkg-card-full" onclick="openCheckout('باقة غير محدودة', '3 أيام', 'unlimited_3days')">
+                <div class="pkg-badge-side">غير محدود</div>
+                <div style="width: 100%;">
+                    <div class="pkg-title">3 أيام</div>
+                    <div class="pkg-price">5000 <span>د.ع</span></div>
+                    <div class="pkg-desc">٣ أيام كاملة العب بيها شكد متريد</div>
+                </div>
+                <button class="pkg-btn">اشتر الآن</button>
+            </div>
+
+            <div class="pkg-card-full" onclick="openCheckout('باقة غير محدودة', 'أسبوع كامل', 'unlimited_week')">
+                <div class="pkg-badge">الأفضل قيمة</div>
+                <div class="pkg-badge-side" style="top: 20px;">غير محدود</div>
+                <div style="width: 100%;">
+                    <div class="pkg-title">أسبوع كامل</div>
+                    <div class="pkg-price">8000 <span>د.ع</span></div>
+                    <div class="pkg-desc">أسبوع كامل بلا حدود – الأفضل للتجمعات</div>
+                </div>
+                <button class="pkg-btn">اشتر الآن</button>
+            </div>
+        </div>
+
+        <div class="pkg-card-full" style="width: 100%; padding: 22px 20px;" onclick="openCheckout('باقة غير محدودة', 'شهر بدون حدود', 'unlimited_month')">
+            <div class="pkg-badge">الأوفر كلياً</div>
+            <div class="pkg-badge-side">غير محدود</div>
+            <div style="width: 100%;">
+                <div class="pkg-title">شهر بدون حدود</div>
+                <div class="pkg-price">18000 <span>د.ع</span></div>
+                <div class="pkg-desc" style="margin-bottom: 15px;">شهر كامل من الألعاب بلا قيود أو حدود</div>
+            </div>
+            <button class="pkg-btn" style="margin-top: 15px;">اشتر الآن</button>
+        </div>
+
+
+
+        <!-- صندوق الاستبدال السفلي -->
+        <div class="redeem-bottom-box">
+            <div class="redeem-bottom-title">لديك كود تفعيل؟</div>
+            <div class="redeem-bottom-desc">أدخل كود الشراء المخصص للعبة أو الباقة ليتم إضافتها لحسابك عبر السيرفر</div>
+            <div class="redeem-input-row">
+                <input type="text" id="promo-code-input" class="redeem-input" placeholder="مثال: game1-abc728 (لكود لعبة واحدة)">
+                <button class="redeem-submit-btn" onclick="redeemQuickCode()">تفعيل وإضافة</button>
+            </div>
+            <div id="redeem-status"></div>
+        </div>
+    </div>
+</div>
+
+<!-- نافذة تفعيل الباقة (Modal) -->
+<div class="modal-overlay" id="checkout-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span style="font-size: 1.05rem; color: #36461d;" id="modal-title-text">🎁 تفعيل الباقة</span>
+            <button class="modal-close" onclick="closeCheckout()">×</button>
+        </div>
+
+        <div class="modal-pkg-preview">
+            <div>
+                <span style="font-size: 0.7rem; background: #e4dec9; padding: 2px 6px; border-radius: 4px;" id="modal-category">باقة ألعاب</span>
+                <div style="font-size: 1.05rem; color: #1a1a1a; margin-top: 2px;" id="modal-pkg-name">10 ألعاب</div>
+            </div>
+            <div style="font-size: 1.05rem; font-weight: 900; color: #2e3c17;" id="modal-pkg-identifier">بررمز مخصص</div>
+        </div>
+
+        <div class="modal-purchase-code-section" id="code-section-box">
+            <span>🔑 أدخل الكود الخاص بهذه الباقة (يستخدم لمرة واحدة):</span>
+            <div class="code-input-row">
+                <input type="text" id="modal-code-input" class="code-input" placeholder="مثال: pkg10-xyz99">
+                <button class="verify-btn" onclick="verifyAndApplyCode()">تحقق وإضافة</button>
+            </div>
+            <div id="modal-code-status" style="font-size: 0.75rem; margin-top: 2px;"></div>
+        </div>
+
+        <div class="modal-free-note" id="free-account-note" style="display: none;">
+            هذا الحساب مسجل في ملف المعفيين ومعفى من إدخال الأكواد.
+            يمكنك تفعيل الباقة مباشرة.
+        </div>
+
+        <button class="modal-confirm-btn" id="modal-action-btn" onclick="confirmExemptActivation()" style="display: none;">تفعيل وإضافة إلى رصيدك</button>
+    </div>
+</div>
+
+<script>
+let selectedPackageKey = "";
+let selectedPackageName = "";
+let isUserExempt = false;
+
+function showNotification(message) {
+    const container = document.getElementById('notification-container');
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.innerText = message;
+    container.appendChild(notification);
+    setTimeout(() => { notification.remove(); }, 3000);
+}
+
+// جلب رصيد المستخدم الحالي تلقائياً عبر مسار السيرفر
+function fetchUserBalance() {
+    fetch('/api/get-user-balance', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.status === 'success') {
+            document.getElementById('current-balance-text').innerText = data.balance + ' لعبة';
+        } else {
+            document.getElementById('current-balance-text').innerText = '0 لعبة';
+        }
+    })
+    .catch(err => {
+        document.getElementById('current-balance-text').innerText = '0 لعبة';
+    });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    fetchUserBalance();
+});
+
+function openCheckout(category, name, pkgKey) {
+    selectedPackageKey = pkgKey;
+    selectedPackageName = name;
+    document.getElementById('modal-category').innerText = category;
+    document.getElementById('modal-pkg-name').innerText = name;
+    document.getElementById('modal-pkg-identifier').innerText = (typeof pkgKey === 'number' ? pkgKey + ' ألعاب' : name);
+
+    document.getElementById('modal-code-input').value = '';
+    document.getElementById('modal-code-status').innerText = '';
+
+    checkExemptStatusReal();
+    document.getElementById('checkout-modal').style.display = 'flex';
+}
+
+function closeCheckout() {
+    document.getElementById('checkout-modal').style.display = 'none';
+}
+
+function checkExemptStatusReal() {
+    fetch('/api/check-exempt-status', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(data => {
+        isUserExempt = (data.is_exempt === true);
+        updateModalUIState();
+    })
+    .catch(err => {
+        isUserExempt = false;
+        updateModalUIState();
+    });
+}
+
+function updateModalUIState() {
+    const freeNote = document.getElementById('free-account-note');
+    const actionBtn = document.getElementById('modal-action-btn');
+    const codeSection = document.getElementById('code-section-box');
+
+    if (isUserExempt) {
+        freeNote.style.display = 'block';
+        actionBtn.style.display = 'block';
+        codeSection.style.display = 'none';
+    } else {
+        freeNote.style.display = 'none';
+        actionBtn.style.display = 'none';
+        codeSection.style.display = 'flex';
+    }
+}
+
+// دالة التحقق من نافذة الشراء (Modal)
+async function verifyAndApplyCode() {
+    const enteredCode = document.getElementById('modal-code-input').value.trim();
+    const statusEl = document.getElementById('modal-code-status');
+
+    if (!enteredCode) {
+        statusEl.style.color = '#d9534f';
+        statusEl.innerText = 'الرجاء إدخال كود الشراء أولاً.';
+        return;
+    }
+
+    statusEl.style.color = '#36461d';
+    statusEl.innerText = 'جاري التحقق من الكود...';
+
+    try {
+        const response = await fetch('/api/verify-and-add-package', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                code: enteredCode
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            statusEl.style.color = '#2e3c17';
+            statusEl.innerText = '✓ ' + result.message;
+            showNotification(result.message);
+            
+            setTimeout(() => {
+                closeCheckout();
+                fetchUserBalance(); 
+            }, 1200);
+        } else {
+            statusEl.style.color = '#d9534f';
+            statusEl.innerText = '✗ ' + result.message;
+        }
+    } catch (error) {
+        statusEl.style.color = '#d9534f';
+        statusEl.innerText = '✗ حدث خطأ في الاتصال بالخادم.';
+    }
+}
+
+function confirmExemptActivation() {
+    fetch('/api/verify-and-add-package', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            code: 'EXEMPT_BYPASS' 
+        })
+    })
+    .then(res => res.json())
+    .then(result => {
+        if (result.status === 'success') {
+            showNotification(result.message);
+            closeCheckout();
+            fetchUserBalance();
+        } else {
+            showNotification('✗ ' + result.message);
+        }
+    })
+    .catch(err => {
+        showNotification('✗ حدث خطأ في الاتصال بالخادم.');
+    });
+}
+
+// دالة صندوق التفعيل السفلي
+async function redeemQuickCode() {
+    const codeInput = document.getElementById('promo-code-input');
+    const statusEl = document.getElementById('redeem-status');
+    const code = codeInput.value.trim();
+
+    if (!code) {
+        statusEl.style.color = '#d9534f';
+        statusEl.innerText = 'يرجى إدخال الكود أولاً.';
+        return;
+    }
+
+    statusEl.style.color = '#36461d';
+    statusEl.innerText = 'جاري التحقق من الكود في قاعدة البيانات...';
+
+    try {
+        const response = await fetch('/api/verify-and-add-package', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                code: code 
+            })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            statusEl.style.color = '#2e3c17';
+            statusEl.innerText = '✓ ' + result.message;
+            showNotification(result.message);
+            codeInput.value = '';
+            
+            setTimeout(() => {
+                fetchUserBalance(); 
+            }, 1500);
+        } else {
+            statusEl.style.color = '#d9534f';
+            statusEl.innerText = '✗ ' + result.message;
+        }
+    } catch (error) {
+        statusEl.style.color = '#d9534f';
+        statusEl.innerText = '✗ حدث خطأ في الاتصال بالخادم.';
+    }
+}
+</script>
+
+</body>
+</html>

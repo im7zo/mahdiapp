@@ -1,0 +1,193 @@
+<style>
+    .footer-content {
+        width: 98%;
+        max-width: 780px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        padding: 30px 20px 20px 20px;
+    }
+
+    .footer-links-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 20px;
+        margin-bottom: 35px;
+        text-align: right;
+    }
+
+    .footer-column h3 {
+        font-family: 'l3ba', sans-serif;
+        font-size: 1.3rem;
+        color: #ffffff;
+        margin-bottom: 15px;
+        font-weight: 900;
+    }
+
+    .footer-column ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-column ul li a {
+        font-family: 'l3ba', sans-serif;
+        font-size: 0.95rem;
+        color: #f2eee3;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+
+    .footer-column ul li a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+
+    .footer-divider {
+        width: 100%;
+        height: 1.5px;
+        background-color: rgba(242, 238, 227, 0.2);
+        margin-bottom: 30px;
+    }
+
+    .footer-brand-section {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .footer-logo {
+        font-family: 'l3ba', sans-serif;
+        font-size: 3rem;
+        font-weight: 900;
+        color: #ffffff;
+        text-shadow: 3px 3px 0px #36461d;
+        transform: rotate(4deg);
+        display: inline-block;
+        line-height: 1;
+    }
+
+    .footer-copyright {
+        font-family: 'l3ba', sans-serif;
+        font-size: 0.85rem;
+        color: #f2eee3;
+        line-height: 1.6;
+        font-weight: 600;
+        max-width: 350px;
+    }
+
+    .footer-copyright span {
+        color: #ffffff;
+        font-weight: 900;
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 10px;
+    }
+
+    .social-icon {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #f2eee3;
+        text-decoration: none;
+        transition: transform 0.2s ease;
+    }
+
+    .social-icon:hover {
+        transform: translateY(-3px);
+    }
+
+    .social-icon svg {
+        width: 28px;
+        height: 28px;
+        fill: none;
+        stroke: #f2eee3;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+</style>
+
+
+<div class="footer-content">
+
+    <!-- روابط القوائم (شبكة من عمودين) -->
+    <div class="footer-links-grid">
+        
+        <div class="footer-column">
+            <h3>اللعب</h3>
+            <ul>
+                <li><a href="/create">إنشاء لعبة</a></li>
+                <li><a href="/games">ألعابي</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>معلومات</h3>
+            <ul>
+                <li><a href="/story">قصتنا</a></li>
+                <li><a href="/faq">الأسئلة الشائعة</a></li>
+                <li><a href="/contact">تواصل معنا</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>السياسات</h3>
+            <ul>
+                <li><a href="/terms">الشروط والأحكام</a></li>
+                <li><a href="/privacy">سياسة الخصوصية</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>المجتمع</h3>
+            <ul>
+                <li><a href="/create-team">أنشئ فئتك</a></li>
+                <li><a href="/community-rules">شروط وأحكام المجتمع</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- الخط الفاصل -->
+    <div class="footer-divider"></div>
+
+    <!-- الشعار وحقوق النشر والسوشيال ميديا -->
+    <div class="footer-brand-section">
+        
+        <div class="footer-logo">تحـداهم</div>
+        
+        <p class="footer-copyright">© 2026 تحـداهم ، جمـيع الحـقوق محفـوظة لـدولة البـصرة المـتحدة .</p>
+
+
+        <div class="social-icons">
+            <!-- إنستغرام -->
+            <a href="#" class="social-icon" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <!-- تليجرام -->
+            <a href="https://t.me/cfc_5" class="social-icon" aria-label="Telegram">
+                <svg viewBox="0 0 24 24"><path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4"></path></svg>
+            </a>
+
+            <!-- تيك توك -->
+            <a href="#" class="social-icon" aria-label="TikTok">
+                <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+            </a>
+        </div>
+
+    </div>
+
+</div>

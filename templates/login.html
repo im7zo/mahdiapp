@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اسبقهم - تسجيل الدخول</title>
+    <style>
+        @font-face {
+            font-family: 'l3ba';
+            src: url('/font/l3ba.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'kd';
+            src: url('/font/kd.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'sred';
+            src: url('/font/sred.ttf') format('truetype');
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: #fbf6ec;
+            color: #36461d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            padding: 25px 0;
+            direction: rtl;
+            text-align: right;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        #notification-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .notification {
+            background-color: #f2eee3;
+            color: #36461d;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 900;
+            padding: 14px 20px;
+            border-radius: 18px;
+            border: 3px solid #36461d;
+            box-shadow: 0 6px 0px #36461d, 0 10px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            pointer-events: auto;
+            animation: slideDown 0.3s ease forwards, fadeOut 0.3s ease 2.7s forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        .page-title-box {
+            width: 90%;
+            max-width: 440px;
+            background-color: #f2eee3;
+            border: 3px solid #36461d;
+            border-radius: 20px;
+            padding: 14px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 0px #36461d;
+        }
+
+        .page-title {
+            font-family: 'sred', sans-serif;
+            font-size: 2.2rem;
+            color: #36461d;
+            font-weight: 900;
+        }
+
+        .content-card {
+            width: 90%;
+            max-width: 440px;
+            background-color: #f2eee3;
+            border: 3px solid #36461d;
+            border-radius: 24px;
+            padding: 25px 20px;
+            color: #36461d;
+            box-shadow: 0 6px 0px #36461d;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 15px;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.8rem;
+            color: #36461d;
+            font-weight: 900;
+        }
+
+        .card-subtitle {
+            font-family: 'l3ba', sans-serif;
+            font-size: 0.95rem;
+            color: #556b2f;
+            margin-top: 5px;
+            font-weight: 700;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.05rem;
+            color: #36461d;
+            font-weight: 900;
+        }
+
+        .form-label .required {
+            color: #b83232;
+        }
+
+        .form-input {
+            width: 100%;
+            background-color: #fbf6ec;
+            border: 3px solid #36461d;
+            border-radius: 22px;
+            padding: 14px 18px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1rem;
+            color: #36461d;
+            outline: none;
+            box-shadow: 0 4px 0px #36461d;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .form-input:focus {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+
+        .form-input::placeholder {
+            color: #8c8c8c;
+            font-family: 'l3ba', sans-serif;
+        }
+
+        .combined-phone-box {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background-color: #fbf6ec;
+            border: 3px solid #36461d;
+            border-radius: 22px;
+            padding: 0 14px;
+            box-shadow: 0 4px 0px #36461d;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            overflow: hidden;
+        }
+
+        .combined-phone-box:focus-within {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+
+        .phone-number-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 14px 0;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1rem;
+            color: #36461d;
+            outline: none;
+            box-shadow: none;
+            text-align: right;
+            direction: ltr;
+            min-width: 0;
+        }
+
+        .phone-number-input::placeholder {
+            color: #8c8c8c;
+            font-family: 'l3ba', sans-serif;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .phone-divider {
+            width: 1px;
+            height: 22px;
+            background-color: #36461d;
+            opacity: 0.2;
+            flex-shrink: 0;
+            margin: 0 10px;
+        }
+
+        .country-side {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'kd', sans-serif;
+            font-size: 1rem;
+            color: #36461d;
+            background-color: transparent;
+            flex-shrink: 0;
+            direction: ltr;
+        }
+
+        .country-flag {
+            width: 22px;
+            height: 15px;
+            border-radius: 2px;
+            object-fit: cover;
+            display: inline-block;
+        }
+
+        .toggle-switch {
+            display: flex;
+            background-color: #fbf6ec;
+            border: 3px solid #36461d;
+            border-radius: 18px;
+            padding: 4px;
+            margin-bottom: 10px;
+            box-shadow: 0 3px 0px #36461d;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: #36461d;
+            cursor: pointer;
+            border-radius: 14px;
+            transition: 0.2s;
+        }
+
+        .toggle-btn.active {
+            background-color: #586e3b;
+            color: #ffffff;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .checkbox-container input {
+            width: 20px;
+            height: 20px;
+            accent-color: #586e3b;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            font-family: 'l3ba', sans-serif;
+            font-size: 0.9rem;
+            color: #36461d;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .checkbox-label a {
+            color: #556b2f;
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #586e3b;
+            border: 3px solid #36461d;
+            border-radius: 20px;
+            padding: 14px;
+            font-family: 'l3ba', sans-serif; /* تم التعديل ليستخدم خط l3ba */
+            font-size: 1.1rem;
+            color: #ffffff;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 5px 0px #36461d;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .submit-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+
+        .switch-mode-btn {
+            width: 100%;
+            background-color: #fbf6ec;
+            border: 3px solid #36461d;
+            border-radius: 20px;
+            padding: 14px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.05rem;
+            color: #36461d;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 5px 0px #36461d;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .switch-mode-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+
+        .extra-links {
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        .extra-links a {
+            font-family: 'l3ba', sans-serif;
+            font-size: 0.95rem;
+            color: #556b2f;
+            text-decoration: none;
+            font-weight: 900;
+        }
+
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="notification-container"></div>
+
+    <div class="page-title-box">
+        <h1 class="page-title" oncontextmenu="return false;">اسـبقهم</h1>
+    </div>
+
+    <!-- نموذج إنشاء حساب -->
+    <main class="content-card" id="register-card">
+        <div class="card-header">
+            <h2 class="card-title">إنشاء حساب جديد</h2>
+            <p class="card-subtitle">انضم إلينا واستمتع بلعبة اسبقهم!</p>
+        </div>
+
+        <form onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label class="form-label">الاسم <span class="required">*</span></label>
+                <input type="text" id="reg-name" class="form-input" placeholder="أدخل اسمك الكامل">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">البريد الإلكتروني <span class="required">*</span></label>
+                <input type="email" id="reg-email" class="form-input" placeholder="example@email.com">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">كلمة المرور <span class="required">*</span></label>
+                <input type="password" id="reg-password" class="form-input" placeholder="أدخل كلمة المرور" minlength="6">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">رقم الهاتف</label>
+                <div class="combined-phone-box">
+                    <input type="tel" id="reg-phone" class="phone-number-input" placeholder="7xxxxxxxx" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
+                    <div class="phone-divider"></div>
+                    <div class="country-side">
+                        <svg class="country-flag" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="900" height="200" fill="#ce1126"/>
+                            <rect y="200" width="900" height="200" fill="#ffffff"/>
+                            <rect y="400" width="900" height="200" fill="#000000"/>
+                            <text x="450" y="325" font-size="110" fill="#007a3d" text-anchor="middle" font-weight="bold" font-family="Arial">الله أكبر</text>
+                        </svg>
+                        <span>+964</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تم جعل العنصر label يحيط بالنص ويؤشر على المربع ليعمل عند الضغط عليه -->
+            <div class="checkbox-container">
+                <input type="checkbox" id="terms-check">
+                <label for="terms-check" class="checkbox-label">
+                    أوافق على <a href="/terms" target="_blank" onclick="event.stopPropagation();">شروط الاستخدام</a> و<a href="/privacy" target="_blank" onclick="event.stopPropagation();">سياسة الخصوصية</a>
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn" style="margin-top: 15px;" oncontextmenu="return false;">إنـشاء الحـساب</button>
+        </form>
+
+        <button type="button" class="switch-mode-btn" onclick="switchCard('login')" oncontextmenu="return false;">لديك حساب بالفعل؟ تسجيل الدخول</button>
+    </main>
+
+    <!-- نموذج تسجيل الدخول -->
+    <main class="content-card" id="login-card" style="display: none;">
+        <div class="card-header">
+            <h2 class="card-title">تـسجيـل الـدخول</h2>
+            <p class="card-subtitle">أهلاً بعودتك مرة أخرى!</p>
+        </div>
+
+        <div class="toggle-switch">
+            <button type="button" class="toggle-btn active" id="btn-email-mode" onclick="setLoginMode('email')">بكلمة المرور</button>
+            <button type="button" class="toggle-btn" id="btn-otp-mode" onclick="setLoginMode('otp')">كود التحقق للإيميل</button>
+        </div>
+
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label class="form-label" id="login-label">البريد الإلكتروني <span class="required">*</span></label>
+                <input type="email" id="login-identifier" class="form-input" placeholder="example@email.com">
+            </div>
+
+            <div class="form-group" id="password-group">
+                <label class="form-label">كلمة المرور <span class="required">*</span></label>
+                <input type="password" id="login-password" class="form-input" placeholder="أدخل كلمة المرور">
+            </div>
+
+            <div class="extra-links" style="margin-bottom: 10px;">
+                <a href="#" onclick="switchCard('forgot')">نسيت كلمة المرور؟</a>
+            </div>
+
+            <button type="submit" class="submit-btn" id="login-submit-btn" oncontextmenu="return false;">تسجيل الدخول</button>
+        </form>
+
+        <button type="button" class="switch-mode-btn" onclick="switchCard('register')" oncontextmenu="return false;">ليس لديك حساب؟ سجل الآن</button>
+    </main>
+
+    <!-- نموذج إدخال كود التحقق (خاص بتسجيل الدخول) -->
+    <main class="content-card" id="otp-card" style="display: none;">
+        <div class="card-header">
+            <h2 class="card-title">التحقق من البريد</h2>
+            <p class="card-subtitle" id="otp-subtitle">أدخل الرمز المرسل إلى بريدك</p>
+        </div>
+
+        <form onsubmit="handleVerifyOTP(event)">
+            <div class="form-group">
+                <label class="form-label">رمز التحقق (6 أرقام) <span class="required">*</span></label>
+                <input type="text" id="otp-code" class="form-input" placeholder="123456" maxlength="6" style="text-align: center; font-size: 1.5rem; letter-spacing: 5px;" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6)">
+            </div>
+
+            <button type="submit" class="submit-btn" style="margin-top: 10px;" oncontextmenu="return false;">تأكيد ودخول</button>
+        </form>
+
+        <button type="button" class="switch-mode-btn" onclick="switchCard('login')" oncontextmenu="return false;">العودة لتسجيل الدخول</button>
+    </main>
+
+    <!-- نموذج نسيت كلمة المرور (الخطوة 1: إدخال البريد الإلكتروني والتحقق منه) -->
+    <main class="content-card" id="forgot-card" style="display: none;">
+        <div class="card-header">
+            <h2 class="card-title">استعادة كلمة المرور</h2>
+            <p class="card-subtitle">أدخل بريدك الإلكتروني للتحقق منه وإرسال رمز الاستعادة</p>
+        </div>
+
+        <form onsubmit="handleForgotRequest(event)">
+            <div class="form-group">
+                <label class="form-label">البريد الإلكتروني <span class="required">*</span></label>
+                <input type="email" id="forgot-email" class="form-input" placeholder="example@email.com">
+            </div>
+
+            <button type="submit" class="submit-btn" style="margin-top: 10px;" oncontextmenu="return false;">إرسال رمز التحقق</button>
+        </form>
+
+        <button type="button" class="switch-mode-btn" onclick="switchCard('login')" oncontextmenu="return false;">العودة لتسجيل الدخول</button>
+    </main>
+
+    <!-- نموذج إدخال رمز الاستعادة + مربعي كلمة السر الجديدة وتأكيدها (الخطوة 2) -->
+    <main class="content-card" id="reset-password-card" style="display: none;">
+        <div class="card-header">
+            <h2 class="card-title">تعيين كلمة سر جديدة</h2>
+            <p class="card-subtitle">أدخل رمز التحقق المرسل لإيميلك وكلمة المرور الجديدة</p>
+        </div>
+
+        <form onsubmit="handleResetPassword(event)">
+            <div class="form-group">
+                <label class="form-label">رمز التحقق (6 أرقام) <span class="required">*</span></label>
+                <input type="text" id="reset-otp" class="form-input" placeholder="123456" maxlength="6" style="text-align: center; font-size: 1.3rem; letter-spacing: 4px;" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6)">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">كلمة السر الجديدة <span class="required">*</span></label>
+                <input type="password" id="new-password" class="form-input" placeholder="أدخل كلمة السر الجديدة">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">تأكيد كلمة السر <span class="required">*</span></label>
+                <input type="password" id="confirm-password" class="form-input" placeholder="أعد إدخال كلمة السر الجديدة">
+            </div>
+
+            <button type="submit" class="submit-btn" style="margin-top: 10px;" oncontextmenu="return false;">حفظ كلمة المرور الجديدة</button>
+        </form>
+
+        <button type="button" class="switch-mode-btn" onclick="switchCard('login')" oncontextmenu="return false;">إلغاء والعودة</button>
+    </main>
+
+    <script>
+        let currentLoginMode = 'email';
+        let pendingEmailForOTP = '';
+        let pendingEmailForReset = '';
+
+        function showNotification(message) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerText = message;
+            container.appendChild(notification);
+            setTimeout(() => { notification.remove(); }, 3000);
+        }
+
+        function switchCard(cardName) {
+            document.getElementById('register-card').style.display = 'none';
+            document.getElementById('login-card').style.display = 'none';
+            document.getElementById('otp-card').style.display = 'none';
+            document.getElementById('forgot-card').style.display = 'none';
+            document.getElementById('reset-password-card').style.display = 'none';
+
+            if (cardName === 'register') {
+                document.getElementById('register-card').style.display = 'flex';
+            } else if (cardName === 'login') {
+                document.getElementById('login-card').style.display = 'flex';
+            } else if (cardName === 'otp') {
+                document.getElementById('otp-card').style.display = 'flex';
+            } else if (cardName === 'forgot') {
+                document.getElementById('forgot-card').style.display = 'flex';
+            } else if (cardName === 'reset') {
+                document.getElementById('reset-password-card').style.display = 'flex';
+            }
+        }
+
+        function setLoginMode(mode) {
+            currentLoginMode = mode;
+            const label = document.getElementById('login-label');
+            const passGroup = document.getElementById('password-group');
+            const submitBtn = document.getElementById('login-submit-btn');
+            
+            document.getElementById('btn-email-mode').classList.remove('active');
+            document.getElementById('btn-otp-mode').classList.remove('active');
+
+            if (mode === 'email') {
+                document.getElementById('btn-email-mode').classList.add('active');
+                label.innerHTML = 'البريد الإلكتروني <span class="required">*</span>';
+                passGroup.style.display = 'flex';
+                submitBtn.innerText = 'تسجيل الدخول';
+            } else {
+                document.getElementById('btn-otp-mode').classList.add('active');
+                label.innerHTML = 'البريد الإلكتروني لإرسال الكود <span class="required">*</span>';
+                passGroup.style.display = 'none';
+                submitBtn.innerText = 'إرسال كود التحقق';
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('reg-name').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value.trim();
+            const phone = document.getElementById('reg-phone').value.trim();
+            const agreed = document.getElementById('terms-check').checked;
+
+            if (!name) { showNotification('يرجى إدخال الاسم.'); return; }
+            if (!email) { showNotification('يرجى إدخال البريد الإلكتروني.'); return; }
+            if (!password) { showNotification('يرجى إدخال كلمة المرور.'); return; }
+            // رقم الهاتف أصبح اختياريًا الآن، يتم التحقق منه فقط إذا قام المستخدم بكتابة شيء غير مكتمل
+           if (password.length < 6) { 
+                showNotification('كلمة المرور يجب أن تكون 6 أحرف أو أرقام على الأقل.'); 
+                return; 
+            } 
+            
+            if (phone && phone.length < 10) { showNotification('رقم الهاتف غير صحيح.'); return; }
+            if (!agreed) { showNotification('يجب الموافقة على شروط الاستخدام وسياسة الخصوصية.'); return; }
+
+            showNotification('جاري إنشاء الحساب...');
+
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, password, phone: phone ? ('+964' + phone) : '' })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showNotification('تم إنشاء الحساب بنجاح! جاري تحويلك...');
+                    setTimeout(() => { window.location.href = '/'; }, 1200);
+                } else {
+                    showNotification(result.message);
+                }
+            } catch (e) {
+                showNotification('حدث خطأ في الاتصال بالسيرفر');
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const identifier = document.getElementById('login-identifier').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+
+            if (!identifier) {
+                showNotification('يرجى إدخال البريد الإلكتروني.');
+                return;
+            }
+
+            if (currentLoginMode === 'email') {
+                if (!password) {
+                    showNotification('يرجى إدخال كلمة المرور.');
+                    return;
+                }
+
+                showNotification('جاري التحقق من البيانات...');
+                try {
+                    const res = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ identifier, password })
+                    });
+                    const result = await res.json();
+                    if (result.success) {
+                        showNotification('تم تسجيل الدخول بنجاح!');
+                        setTimeout(() => { window.location.href = '/'; }, 1200);
+                    } else {
+                        showNotification(result.message || 'بيانات الدخول غير صحيحة');
+                    }
+                } catch (e) {
+                    showNotification('حدث خطأ في الاتصال بالسيرفر');
+                }
+            } else {
+                pendingEmailForOTP = identifier;
+                showNotification('جاري إرسال كود التحقق...');
+                try {
+                    const res = await fetch('/api/send-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: identifier })
+                    });
+                    const result = await res.json();
+                    if (result.success) {
+                        showNotification('تم إرسال كود التحقق إلى بريدك.');
+                        switchCard('otp');
+                    } else {
+                        showNotification(result.message || 'البريد الإلكتروني غير مسجل');
+                    }
+                } catch (e) {
+                    showNotification('حدث خطأ في الاتصال بالسيرفر');
+                }
+            }
+        }
+
+        async function handleVerifyOTP(event) {
+            event.preventDefault();
+            const code = document.getElementById('otp-code').value.trim();
+
+            if (code.length < 6) {
+                showNotification('يرجى إدخال رموز التحقق الستة كاملة.');
+                return;
+            }
+
+            showNotification('جاري التحقق من الكود...');
+            try {
+                const res = await fetch('/api/verify-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: pendingEmailForOTP, code })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showNotification('تم التحقق وتسجيل الدخول بنجاح!');
+                    setTimeout(() => { window.location.href = '/'; }, 1200);
+                } else {
+                    showNotification(result.message || 'كود التحقق غير صحيح');
+                }
+            } catch (e) {
+                showNotification('حدث خطأ في الاتصال بالسيرفر');
+            }
+        }
+
+        async function handleForgotRequest(event) {
+            event.preventDefault();
+            const email = document.getElementById('forgot-email').value.trim();
+
+            if (!email) {
+                showNotification('يرجى إدخال البريد الإلكتروني.');
+                return;
+            }
+
+            pendingEmailForReset = email;
+            showNotification('جاري التحقق من البريد وإرسال الكود...');
+
+            try {
+                const res = await fetch('/api/forgot-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showNotification('تم إرسال كود استعادة كلمة المرور إلى بريدك.');
+                    switchCard('reset');
+                } else {
+                    showNotification(result.message || 'البريد الإلكتروني غير مسجل معنا');
+                }
+            } catch (e) {
+                showNotification('حدث خطأ في الاتصال بالسيرفر');
+            }
+        }
+
+        async function handleResetPassword(event) {
+            event.preventDefault();
+            const code = document.getElementById('reset-otp').value.trim();
+            const newPassword = document.getElementById('new-password').value.trim();
+            const confirmPassword = document.getElementById('confirm-password').value.trim();
+
+            if (code.length < 6) {
+                showNotification('يرجى إدخال رمز التحقق كاملاً (6 أرقام).');
+                return;
+            }
+            if (!newPassword || !confirmPassword) {
+                showNotification('يرجى تعبئة حقول كلمة المرور.');
+                return;
+            }
+            if (newPassword !== confirmPassword) {
+                showNotification('كلمتا المرور غير متطابقتين!');
+                return;
+            }
+
+            showNotification('جاري تحديث كلمة المرور...');
+
+            try {
+                const res = await fetch('/api/reset-password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: pendingEmailForReset, code, newPassword })
+                });
+                const result = await res.json();
+                if (result.success) {
+                    showNotification('تم تغيير كلمة المرور بنجاح! سجل دخولك الآن.');
+                    setTimeout(() => { switchCard('login'); }, 1500);
+                } else {
+                    showNotification(result.message || 'فشل تغيير كلمة المرور، تأكد من صحة الكود');
+                }
+            } catch (e) {
+                showNotification('حدث خطأ في الاتصال بالسيرفر');
+            }
+        }
+    </script>
+</body>
+</html>

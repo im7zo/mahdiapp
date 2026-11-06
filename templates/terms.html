@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الشروط والأحكام - تحـداهم</title>
+    <style>
+        @font-face {
+            font-family: 'l3ba';
+            src: url('/font/l3ba.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'sred';
+            src: url('/font/sred.ttf') format('truetype');
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* منع ظهور قائمة حفظ الصورة أو نسخ الرابط عند الضغط مطولاً في الهواتف */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: #dfd6ad;
+            color: #dfd6ad;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding-bottom: 25px;
+            padding-top: 25px;
+            direction: rtl;
+            text-align: right;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* حاوية العنوان المربعة البارزة في الأعلى */
+        .page-title-box {
+            width: 90%;
+            max-width: 440px;
+            background-color: #fef9db;
+            border: 3px solid #36461d;
+            border-radius: 20px;
+            padding: 18px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 0px #36461d;
+        }
+
+        .page-title {
+            font-family: 'sred', sans-serif;
+            font-size: 2.2rem;
+            color: #36461d;
+            font-weight: 900;
+        }
+
+        /* البطاقة الرئيسية للمحتوى */
+        .content-card {
+            width: 90%;
+            max-width: 440px;
+            background-color: #f7f2d4;
+            border: 3px solid #36461d;
+            border-radius: 24px;
+            padding: 25px 20px;
+            color: #36461d;
+            box-shadow: 0 6px 0px #36461d;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* أقسام النص داخل البطاقة */
+        .story-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-bottom: 2px dashed rgba(54, 70, 29, 0.2);
+            padding-bottom: 20px;
+        }
+
+        .story-section:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .story-section h2 {
+            font-family: 'sred', sans-serif;
+            font-size: 1.3rem;
+            color: #272f18;
+            font-weight: 900;
+        }
+
+        .story-section p {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.05rem;
+            color: #77775F;
+            line-height: 1.8;
+            font-weight: 600;
+        }
+
+        .story-section ul {
+            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .story-section li {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.05rem;
+            color: #77775F;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+                /* اللون الجديد مع فرض الأولوية */
+        .story-section p.intro-text {
+            color: #899264 !important;
+        }
+        
+        /* صندوق التواصل الداخلي */
+        .join-box {
+            background-color: #586e3b;
+            border: 2px solid #36461d;
+            border-radius: 18px;
+            padding: 25px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 5px;
+            box-shadow: 0 4px 0px #36461d;
+        }
+
+        .join-box h3 {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.3rem;
+            color: #ffffff;
+            font-weight: 900;
+            line-height: 1.5;
+        }
+
+        .contact-btn {
+            background-color: #f2eee3;
+            border: 2px solid #36461d;
+            border-radius: 14px;
+            padding: 10px 30px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.1rem;
+            color: #36461d;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 0px #36461d;
+            text-decoration: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .contact-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0px #36461d;
+        }
+
+        /* زر العودة */
+        .back-btn-container {
+            width: 90%;
+            max-width: 440px;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            width: 100%;
+            background-color: #586e3b;
+            border: 2px solid #36461d;
+            border-radius: 18px;
+            padding: 14px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.2rem;
+            color: #ffffff;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 0px #36461d;
+            text-decoration: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .back-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- عنوان الصفحة -->
+    <div class="page-title-box">
+        <h1 class="page-title">الشروط والأحكام</h1>
+    </div>
+
+    <!-- البطاقة الرئيسية للمحتوى -->
+    <main class="content-card">
+        
+        <!-- المقدمة -->
+        <section class="story-section">
+
+            <p class="intro-text">مرحـبًا بكـم فـي تحـداهم عـند استـخدام منصـتنا، فـإنك تـوافق علـى الالتـزام بالـشروط والأحـكام التـالية، يـرجى قـراءتها بعـناية .</p>
+        </section>
+
+        <!-- شروط الاستخدام -->
+        <section class="story-section">
+            <h2>شـروط الاسـتخدام</h2>
+            <ul>
+                <li>يجـب أن تكـون جمـيع المعلومات المقـدمة عند التسـجيل صحـيحة ودقـيقة .</li>
+                <li>يحـظر استـخدام المنـصة لأي نشـاط غـير قانـوني أو احتـيالي .</li>
+                <li>تحـتفظ تحـداهم بالـحق فـي تعـليق أو إنهـاء حـسابك فـي حـالة انتـهاك هـذهِ الشـروط .</li>
+                <li>يجـب عـلى المستـخدمين احـترام حـقوق المـلكية الفـكرية والامتـناع عـن نـسخ أو تـوزيع المـحتوى دون إذن .</li>
+            </ul>
+        </section>
+
+        <!-- المحتوى والملكية الفكرية -->
+        <section class="story-section">
+            <h2>الـمحتوى والـملكية الفـكرية</h2>
+            <p>جمـيع المحـتويات المـعروضة عـلى منـصة تحـداهم، بـما فـي ذلك النـصوص والـصور والرسـومات والشـعارات، هـي مـلك لشركة تحـداهم وتخـضع لحـماية حقـوق الملـكية الفـكرية .</p>
+        </section>
+
+        <!-- المدفوعات والاشتراكات -->
+        <section class="story-section">
+            <h2>المـدفوعات والاشتـراكات</h2>
+            <p>سيـتم توضـيح جمـيع الرسـوم والمـدفوعات قـبل إتـمام أي عـملية شـراء، لا يـتم إجـراء أي استـرداد للمـدفوعات إلا وفـقًا لسـياسة الاسـترداد المـعمول بـها .</p>
+        </section>
+
+        <!-- التغييرات في الشروط والأحكام -->
+        <section class="story-section">
+            <h2>التغـييرات فـي الشروط والأحكام</h2>
+            <p>تحتـفظ تحـداهم بالـحق فـي تعـديل هـذهِ الشـروط والأحـكام فـي أي وقـت، سـيتم إخـطار المسـتخدمين بالتـغييرات عـبر البـريد الإلكـتروني أو مـن خـلال إشـعار عـلى المـوقع .</p>
+        </section>
+
+        <!-- الاتصال بنا -->
+        <section class="story-section">
+            <h2>الاتـصال بنـا</h2>
+            <p>إذا كـان لـديك أي أسـئلة حـول هـذهِ الشـروط والأحـكام، يرجـى التـواصل معـنا علـى البـريد الإلكتـروني t7dahm@gmail.com .</p>
+        </section>
+
+        <!-- صندوق التواصل -->
+        <div class="join-box">
+            <h3>هل لديك استفسار آخر؟</h3>
+            <a href="/contact" class="contact-btn" oncontextmenu="return false;">تواصـل معـنا</a>
+        </div>
+
+    </main>
+
+    <!-- زر العودة -->
+    <div class="back-btn-container">
+        <a href="/" class="back-btn" oncontextmenu="return false;">
+            <span>←</span> الـعودة
+        </a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأسئلة الشائعة - تحـداهم</title>
+    <style>
+        @font-face {
+            font-family: 'l3ba';
+            src: url('/font/l3ba.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'kd';
+            src: url('/font/kd.otf') format('truetype');
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: #dfd6ad;
+            color: #36461d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding-bottom: 25px;
+            padding-top: 25px;
+            direction: rtl;
+            text-align: right;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* حاوية العنوان المربعة في الأعلى */
+        .page-title-box {
+            width: 90%;
+            max-width: 440px;
+            background-color: #fef9db;
+            border: 3px solid #36461d;
+            border-radius: 20px;
+            padding: 18px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 0px #36461d;
+        }
+
+        .page-title {
+            font-family: 'kd', sans-serif;
+            font-size: 2.2rem;
+            color: #36461d;
+            font-weight: 900;
+        }
+
+        /* البطاقة الرئيسية للمحتوى */
+        .content-card {
+            width: 90%;
+            max-width: 440px;
+            background-color: #fef9db;
+            border: 3px solid #36461d;
+            border-radius: 24px;
+            padding: 25px 20px;
+            color: #36461d;
+            box-shadow: 0 6px 0px #36461d;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* نص الترحيب والتعريف */
+        .intro-text {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.05rem;
+            color: #36461d;
+            line-height: 1.8;
+            font-weight: 600;
+            text-align: right;
+            margin-bottom: 5px;
+        }
+
+        /* حاوية قائمة الأسئلة */
+        .faq-wrapper {
+            background-color: #f7f2d4;
+            border: 2px solid #36461d;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        /* عنصر السؤال الفردي */
+        .faq-item {
+            border-bottom: 2px solid #36461d;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            padding: 16px 18px;
+            font-family: 'kd', sans-serif;
+            font-size: 1.1rem;
+            color: #36461d;
+            font-weight: 900;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            text-align: right;
+            direction: rtl;
+        }
+
+        /* السهم على اليمين بجانب النص */
+        .faq-arrow {
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+            margin-left: 10px;
+            display: inline-block;
+        }
+
+        /* محتوى الإجابة المخفي افتراضياً */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background-color: #fef9db;
+            padding: 0 18px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 0.95rem;
+            color: #36461d;
+            line-height: 1.7;
+            font-weight: 600;
+        }
+
+        /* عند فتح السؤال */
+        .faq-item.active .faq-answer {
+            max-height: 250px;
+            padding: 14px 18px;
+            border-top: 2px dashed rgba(54, 70, 29, 0.2);
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* صندوق المساعدة الإضافي الداخلي */
+        .help-box {
+            background-color: #586e3b;
+            border: 2px solid #36461d;
+            border-radius: 18px;
+            padding: 22px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+            box-shadow: 0 4px 0px #36461d;
+        }
+
+        .help-box h3 {
+            font-family: 'kd', sans-serif;
+            font-size: 1.15rem;
+            color: #ffffff;
+            font-weight: 900;
+            line-height: 1.5;
+        }
+
+        .contact-btn {
+            background-color: #f2eee3;
+            border: 2px solid #36461d;
+            border-radius: 14px;
+            padding: 10px 30px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.1rem;
+            color: #36461d;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 0px #36461d;
+            text-decoration: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .contact-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0px #36461d;
+        }
+
+        /* زر العودة */
+        .back-btn-container {
+            width: 90%;
+            max-width: 440px;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            width: 100%;
+            background-color: #586e3b;
+            border: 2px solid #36461d;
+            border-radius: 18px;
+            padding: 14px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.2rem;
+            color: #ffffff;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 0px #36461d;
+            text-decoration: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .back-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- عنوان الصفحة -->
+    <div class="page-title-box">
+        <h1 class="page-title">الاسـئلة الشـائعة</h1>
+    </div>
+
+    <!-- البطاقة الرئيسية -->
+    <main class="content-card">
+        
+        <p class="intro-text">
+            عـندنا هـنا إجـابات للأَسـئلة اللي يسـألونها الـناس كـثير عـن لعـبة تحـداهم، إذا ما لـكيت إجـابة لسـؤالك، تقـدر تـتواصل معـنا عـلى صفـحة الاتصـال .
+        </p>
+
+        <!-- قائمة الأسئلة الشائعة -->
+        <div class="faq-wrapper">
+            
+            <!-- السؤال الأول -->
+            <div class="faq-item">
+                <button class="faq-question" oncontextmenu="return false;">
+                    <span>هـيَ شـنو تحَـداهم؟</span>
+                    <span class="faq-arrow">⌄</span>
+                </button>
+                <div class="faq-answer">
+                    تحـداهم هـي لعـبة تعـزز التجـمع الواقـعي بـين الأصـدقاء والعـائلة، تحـتوي عـلى 6 فـئات و 36 سـؤال، مـع 3 وسـائل مسـاعدة يـمكن استـخدامها خلال اللـعب، تجـمع بين المـتعة والتـحدي وتثـري ثقـافتك بطـريقة تفاعـلية وممـتعة .
+                </div>
+            </div>
+
+            <!-- السؤال الثاني -->
+            <div class="faq-item">
+                <button class="faq-question" oncontextmenu="return false;">
+                    <span>المـوقع ببـلاش ولا بفـلوس؟</span>
+                    <span class="faq-arrow">⌄</span>
+                </button>
+                <div class="faq-answer">
+                    المـوقع مجـاني بالكـامل، بـس الألـعاب والاسـئلة بسـعر رمـزي جـداً ومقـارنة بالقـيمة والـمنافسين احـنا نقـدم أفـضل الأسـعار، وأي لعبة تشـتريها بتـبقى متـاحة لك تـلعبها فـي أي وقـت .
+                </div>
+            </div>
+
+            <!-- السؤال الثالث -->
+            <div class="faq-item">
+                <button class="faq-question" oncontextmenu="return false;">
+                    <span>شلـون أسـوي لعـبة خاصـة؟</span>
+                    <span class="faq-arrow">⌄</span>
+                </button>
+                <div class="faq-answer">
+                    روح لصـفحة إنشـاء لعـبة واخـتار 6 فـئات، كـل فريـق يخـتار 3 فئـات خـاصة بيه، واكتـبوا اسـم كل فريق واسـتمتعوا باللـعب، هالطـريقة تخـليكم تسـوون لعبة على ذوقـكم وتنافـسوا عـلى الفئات اللي تفـضلونها .
+                </div>
+            </div>
+
+            <!-- السؤال الرابع -->
+            <div class="faq-item">
+                <button class="faq-question" oncontextmenu="return false;">
+                    <span>اكـدر ألعـب أونـلاين مـع اصـدقائي؟</span>
+                    <span class="faq-arrow">⌄</span>
+                </button>
+                <div class="faq-answer">
+                    نفـضل تعـزيز التجـمع الواقـعي لكـن تكـدر تتجـمعون انت واصـدقائك بـروم صـوتي فـي Discord وتشـاركون الشـاشة وتلعـبون .
+                </div>
+            </div>
+
+            <!-- السؤال الخامس -->
+            <div class="faq-item">
+                <button class="faq-question" oncontextmenu="return false;">
+                    <span>ويـن أروح إذا واجـهتني مشـكلة؟</span>
+                    <span class="faq-arrow">⌄</span>
+                </button>
+                <div class="faq-answer">
+                    تكـدر تـبلغ عنـها عـن طريق صـفحة التـواصل عنـدنا او عـن طـريق حسـابتنا فـي التـواصل الاجتـماعي فـقط، احـنا دايماً موـجودين علـمود نسـاعدك ونـحل أي مشـكلة تواجـهك .
+                </div>
+            </div>
+
+            <!-- السؤال السادس -->
+            <div class="faq-item">
+                <button class="faq-question" oncontextmenu="return false;">
+                    <span>أكـدر أسـتخدم تحـداهم بتـلفوني؟</span>
+                    <span class="faq-arrow">⌄</span>
+                </button>
+                <div class="faq-answer">
+                   أكـيد تكـدر، استـخدم تحـداهم عـلى تلفـونك سـواء مـن المتـصفح أو قـريبا التطـبيق فـي آب سـتور (App Store) أو قـوقل بلاي (Google Play) .
+                </div>
+            </div>
+
+            <!-- السؤال السابع -->
+            <div class="faq-item">
+                <button class="faq-question" oncontextmenu="return false;">
+                    <span>أكـدر أقتـرح أسـئلة جديـدة؟</span>
+                    <span class="faq-arrow">⌄</span>
+                </button>
+                <div class="faq-answer">
+                    أكيـد، تكـدر تقـترح أسـئلة وفئـات جـديدة مـن خلال صفـحة التـواصل فـي موقـعنا أو عـبر حساـباتنا في مـنصات التـواصل الاجـتماعي، نـرحب دائـماً باقـتراحاتكم .
+                </div>
+            </div>
+
+        </div>
+
+        <!-- صندوق المساعدة -->
+        <div class="help-box">
+            <h3>هل لديك سؤال آخر لم تجد إجابته هنا؟</h3>
+            <a href="/contact" class="contact-btn" oncontextmenu="return false;">تواصـل معـنا</a>
+        </div>
+
+    </main>
+
+    <!-- زر العودة -->
+    <div class="back-btn-container">
+        <a href="/" class="back-btn" oncontextmenu="return false;">
+            <span>←</span> الـعودة
+        </a>
+    </div>
+
+    <!-- كود تفاعلي لفتح وإغلاق الأسئلة بسلاسة -->
+    <script>
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                
+                // إغلاق باقي العناصر المفتوحة
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+
+                // تبديل حالة العنصر الحالي
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+
+</body>
+</html>

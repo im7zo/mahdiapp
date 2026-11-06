@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قصتنا - تحـداهم</title>
+    <style>
+        @font-face {
+            font-family: 'l3ba';
+            src: url('/font/l3ba.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'sred';
+            src: url('/font/sred.ttf') format('truetype');
+        }
+
+        
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* منع ظهور قائمة حفظ الصورة أو نسخ الرابط عند الضغط مطولاً في الهواتف */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: #dfd6ad;
+            color: #36461d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding-bottom: 25px;
+            padding-top: 25px;
+            direction: rtl;
+            text-align: right;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        /* حاوية عنوان "قصتنا" المربعة البارزة في الأعلى */
+        .page-title-box {
+            width: 90%;
+            max-width: 440px;
+            background-color: #fef9db;
+            border: 3px solid #36461d;
+            border-radius: 20px;
+            padding: 18px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 0px #36461d;
+        }
+
+        .page-title {
+            font-family: 'sred', sans-serif;
+            font-size: 2.2rem;
+            color: #36461d;
+            font-weight: 900;
+        }
+
+        /* البطاقة الرئيسية للمحتوى */
+        .content-card {
+            width: 90%;
+            max-width: 440px;
+            background-color: #f7f2d4;
+            border: 3px solid #36461d;
+            border-radius: 24px;
+            padding: 25px 20px;
+            color: #36461d;
+            box-shadow: 0 6px 0px #36461d;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* بانر القصة الداخلي (يعرض صورة برابط مباشر) */
+        .story-banner {
+            width: 100%;
+            height: 180px;
+            background-color: #586e3b;
+            border: 2px solid #36461d;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 3px 5px rgba(0,0,0,0.15);
+        }
+
+        .story-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none; /* لمنع تفاعل اللمس المباشر مع الصورة */
+        }
+
+        /* أقسام النص داخل البطاقة */
+        .story-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-bottom: 2px dashed rgba(54, 70, 29, 0.2);
+            padding-bottom: 20px;
+        }
+
+        .story-section:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .story-section h2 {
+            font-family: 'sred', sans-serif;
+            font-size: 1.3rem;
+            color: #2d361e;
+            font-weight: 900;
+        }
+
+        .story-section p {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.05rem;
+            color: #77775F;
+            line-height: 1.8;
+            font-weight: 600;
+        }
+
+        /* صندوق التواصل الداخلي */
+        .join-box {
+            background-color: #586e3b;
+            border: 2px solid #36461d;
+            border-radius: 18px;
+            padding: 25px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 5px;
+            box-shadow: 0 4px 0px #36461d;
+        }
+
+        /* تم تحديثه ليأخذ خط الشرح (sred) */
+        .join-box h3 {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.3rem;
+            color: #ffffff;
+            font-weight: 900;
+            line-height: 1.5;
+        }
+
+        .contact-btn {
+            background-color: #f2eee3;
+            border: 2px solid #36461d;
+            border-radius: 14px;
+            padding: 10px 30px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.1rem;
+            color: #36461d;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 0px #36461d;
+            text-decoration: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .contact-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0px #36461d;
+        }
+
+        /* زر العودة */
+        .back-btn-container {
+            width: 90%;
+            max-width: 440px;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            width: 100%;
+            background-color: #586e3b;
+            border: 2px solid #36461d;
+            border-radius: 18px;
+            padding: 14px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.2rem;
+            color: #ffffff;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 0px #36461d;
+            text-decoration: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .back-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- عنوان "قصتنا" المربع تماماً مثل طلبك -->
+    <div class="page-title-box">
+        <h1 class="page-title">قـصتـنا</h1>
+    </div>
+
+    <!-- البطاقة الرئيسية للمحتوى -->
+    <main class="content-card">
+        
+        <!-- بانر القصة (يحتوي على رابط الصورة المباشر) -->
+        <div class="story-banner">
+            <img src="https://files.catbox.moe/3159ck.jpg" alt="قصتنا - تحـداهم" oncontextmenu="return false;">
+        </div>
+
+        <!-- البداية -->
+        <section class="story-section">
+            <h2>الـبداية</h2>
+            <p>انطلـقت رحـلة تحـداهم في عام 2026 على أيدي مطـور عـراقـي لـوحدة لإنشـاء لعـبة قـريبة للعـراقيين ولثقـافتهم ، سـعينا لتأسـيس منـصة ترفـيهية تـثري المحـتوى العربي الرقمي وتعـزز المـعرفة بأسـلوب مبـتكر وتفـاعلي .</p>
+            <p>استـلهمنا فكـرتنا مـن المـوروث الثـقافـي العـراقـي الأصـيل وحبـنا للمسـابقات المعـرفية، فجـمعنا بـين التقـنية الحـديثة والهـوية الثقـافية العـربية فـي تجـربة فـريدة تـلامس قـلوب المستـخدميـن .</p>
+        </section>
+
+        <!-- رؤيتنا -->
+        <section class="story-section">
+            <h2>رؤيـتنا</h2>
+            <p>تتمـحور رؤيـتنا حـول صنـاعة ألعـاب بطابع عـراقـي عـربـي ممـتع ، لتـكون تحـدتهم المنـصة الـرائدة فـي مـجال الألعـاب الثـقافية والمعـرفية فـي جـمهورية العـراق والعـالم العـربي ، نـؤمن بأن التـعلم يمكن أن يـكون ممـتعاً ، وأن المـعرفة تزدهر حـين تُـقدم بأسـلوب تفـاعلي يـجذب المـستخدم .</p>
+            <p>هدفـنا هـو تأسـيس مجـتمع مـتكامل مـن المتعـلمين المتحـمسين الـذين يتـنافسون بـروح إيجابية لإثـراء معارفـهم واكتـشاف آفـاق جديدة، مـع الحـفاظ عـلى الهـوية العـراقية والعـربية .</p>
+        </section>
+
+        <!-- فريقنا -->
+        <section class="story-section">
+            <h2>فـريقنا</h2>
+            <p>يتـألف فـريق تحـداهم بالـكامل مـن كـوادر عـراقية مبـدعة ، نجـمع بين مهـارات متـنوعة ومتـكاملة فـي مجالات البـرمجة والتـصميم وتطـوير المحـتوى، مسـترشدين بخـبراتنا المـتراكمة فـي مجـالات التـقنية والتـعليم والابتـكار .</p>
+            <p>نسـتمد قوتـنا مـن تكـامل فريـقنا وانتـمائه العمـيق للثقافة العـراقية، والتـزامنا المشـترك بتقـديم محـتوى عربـي أصـيل ومبـتكر يحـاكي تطـلعات المسـتخدم العـربي ، جـذب قـوتنا تـوفيق مـن الله ومـحمد وعـلي .</p>
+        </section>
+
+        <!-- المستقبل -->
+        <section class="story-section">
+            <h2>المـستقبل</h2>
+            <p>نتـطلع بثـقة إلـى مسـتقبل مـشرق لتحـداهم، مـع خـطط طمـوحة للتـوسع وتطـوير المنصة،  نعـمل بدأب عـلى ابتـكار ميزات جديـدة وتحسـين تـجربة المسـتخدم وإثـراء المحـتوى بـما يعـكس عمـق وثـراء الثـقافة العـراقية .</p>
+            <p>نحـن ملتـزمون بمـواصلة رحلـتنا فـي تقـديم ألـعاب عـراقية بطـابع عـربي أصـيل، والمـساهمة فـي إثـراء المـحتوى الرقمـي العـربي بمـا يتـوافق مـع تطـلعات عـراقنا الحـبيب .</p>
+        </section>
+
+        <!-- صندوق التواصل -->
+        <div class="join-box">
+            <h3>هل ترغب في أن تكون جزءاً من قصة نجاحنا؟</h3>
+            <a href="/contact" class="contact-btn" oncontextmenu="return false;">تـواصل معـنا</a>
+        </div>
+
+    </main>
+
+    <!-- زر العودة -->
+    <div class="back-btn-container">
+        <a href="/" class="back-btn" oncontextmenu="return false;">
+            <span>←</span> الـعودة
+        </a>
+    </div>
+
+</body>
+</html>

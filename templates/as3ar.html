@@ -1,0 +1,340 @@
+<style>
+    @font-face {
+        font-family: 'mrb3';
+        src: url('/font/mrb3.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: 'kd';
+        src: url('/font/kd.otf') format('truetype');
+    }
+    @font-face {
+        font-family: 'l3ba';
+        src: url('/font/l3ba.otf') format('truetype');
+    }
+
+    /* تنسيق القسم العام */
+    .prices-content {
+        width: 100%;
+        max-width: 450px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        padding: 10px 16px 40px 16px;
+        box-sizing: border-box;
+    }
+
+    /* استجابة الشاشات الكبيرة (أجهزة اللابتوب والآيباد والتابلت) */
+    @media (min-width: 768px) {
+        .prices-content {
+            max-width: 650px;
+            padding: 20px 24px 60px 24px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .prices-content {
+            max-width: 850px;
+        }
+    }
+
+    /* عنوان القسم الرئيسي */
+    .section-main-title {
+        font-family: 'l3ba', sans-serif;
+        font-size: 2.5rem;
+        color: #ffffff;
+        text-shadow: 2px 2px 0px #36461d;
+        margin-bottom: 2px;
+        text-align: center;
+    }
+
+    .section-main-desc {
+        font-family: 'l3ba', sans-serif;
+        font-size: 0.95rem;
+        color: #f2eee3;
+        text-align: center;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    /* فاصل الأقسام (مثل باقات غير محدودة) */
+    .divider-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        gap: 15px;
+        color: #f2eee3;
+        font-family: 'l3ba', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 15px 0 5px 0;
+    }
+
+    .divider-title::before, 
+    .divider-title::after {
+        content: '';
+        flex: 1;
+        height: 2px;
+        background-color: rgba(242, 238, 227, 0.3);
+    }
+
+    /* شبكة الباقات */
+    .packages-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+
+    @media (min-width: 1024px) {
+        .packages-grid {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
+    .packages-full {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    @media (min-width: 1024px) {
+        .packages-full {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    /* كارت الباقة الأساسي (لون بيج فاتح) */
+    .pkg-card {
+        background-color: #f5f2e0;
+        border: 2.5px solid #36461d;
+        border-radius: 26px;
+        padding: 18px 14px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 6px 0px #36461d, 0 10px 15px rgba(0, 0, 0, 0.15);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .pkg-card-full {
+        background-color: #f5f2e0;
+        border: 2.5px solid #36461d;
+        border-radius: 26px;
+        padding: 22px 20px;
+        text-align: center;
+        position: relative;
+        box-shadow: 0 6px 0px #36461d, 0 10px 15px rgba(0, 0, 0, 0.15);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* الشارة العلوية (الأكثر طلباً / الأوفر / غير محدود) */
+    .pkg-badge {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        background-color: #36461d;
+        color: #f5f2e0;
+        font-family: 'kd', sans-serif;
+        font-size: 0.75rem;
+        padding: 4px 16px;
+        border-radius: 12px;
+        border: 2px solid #36461d;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        white-space: nowrap;
+    }
+
+    .pkg-badge-side {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background-color: #36461d;
+        color: #f5f2e0;
+        font-family: 'kd', sans-serif;
+        font-size: 0.75rem;
+        padding: 3px 12px;
+        border-radius: 10px;
+    }
+
+    /* النصوص داخل الباقة */
+    .pkg-title {
+        font-family: 'kd', sans-serif;
+        font-size: 1.2rem;
+        color: #1a1a1a;
+        margin-bottom: 2px;
+        margin-top: 8px;
+    }
+
+    .pkg-price {
+        font-family: 'l3ba', sans-serif;
+        font-size: 2rem;
+        font-weight: 900;
+        color: #2e3c17;
+        line-height: 1.1;
+        margin-bottom: 6px;
+    }
+
+    .pkg-price span {
+        font-size: 1.1rem;
+        font-family: 'kd', sans-serif;
+    }
+
+    .pkg-desc {
+        font-family: 'l3ba', sans-serif;
+        font-size: 0.8rem;
+        color: #55503c;
+        margin-bottom: 15px;
+        font-weight: 700;
+        line-height: 1.4;
+    }
+
+    /* زر الشراء داخل الكارت */
+    .pkg-btn {
+        width: 100%;
+        background-color: #36461d;
+        color: #f5f2e0;
+        border: 2px solid #233118;
+        padding: 10px;
+        border-radius: 18px;
+        font-family: 'kd', sans-serif;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 4px 0px #233118;
+        transition: transform 0.1s ease;
+    }
+
+    .pkg-btn:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 0px #233118;
+    }
+
+    /* تنسيق خاص للباقات الطولية (غير المحدود) */
+    .pkg-card-full .pkg-title {
+        align-self: flex-start;
+        font-size: 1.4rem;
+        margin-top: 0;
+    }
+
+    .pkg-card-full .pkg-price {
+        align-self: flex-start;
+        font-size: 2.4rem;
+        text-align: right;
+    }
+
+    .pkg-card-full .pkg-desc {
+        align-self: flex-start;
+        text-align: right;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .pkg-card-full .pkg-btn {
+        max-width: 100%;
+    }
+</style>
+
+<!-- فاصل زخرفي في بداية الصفحة -->
+<div style="width: 100%; display: flex; align-items: center; justify-content: center; margin: 10px 0 20px 0;">
+    <div style="width: 80%; max-width: 350px; height: 3px; background-color: rgba(242, 238, 227, 0.4); border-radius: 2px;"></div>
+</div>
+
+
+<div class="prices-content">
+    <h1 class="section-main-title">الأسعـار</h1>
+    <p class="section-main-desc">اختر الباقة اللي تناسبك وابدأ التحدي مع ربعك</p>
+
+    <!-- الباقات العادية (شبكة عمودين) -->
+    <div class="packages-grid">
+        <!-- لعبة واحدة -->
+        <div class="pkg-card">
+            <div>
+                <div class="pkg-title">لعبة واحدة</div>
+                <div class="pkg-price">500 <span>د.ع</span></div>
+                <div class="pkg-desc">تريد تجرب؟ ابدأ بلعبة واحدة</div>
+            </div>
+            <button class="pkg-btn">اشتر الآن</button>
+        </div>
+
+        <!-- لعبتين -->
+        <div class="pkg-card">
+            <div>
+                <div class="pkg-title">لعبتين</div>
+                <div class="pkg-price">1000 <span>د.ع</span></div>
+                <div class="pkg-desc">لعبتين بسعر 1000 د.ع فقط</div>
+            </div>
+            <button class="pkg-btn">اشتر الآن</button>
+        </div>
+
+        <!-- 5 ألعاب -->
+        <div class="pkg-card">
+            <div>
+                <div class="pkg-title">5 ألعاب</div>
+                <div class="pkg-price">2000 <span>د.ع</span></div>
+                <div class="pkg-desc"> ألعاب بسعر أوفر - وفّر 500 </div>
+            </div>
+            <button class="pkg-btn">اشتر الآن</button>
+        </div>
+
+        <!-- 10 ألعاب (الأكثر طلباً) -->
+        <div class="pkg-card" style="margin-top: 10px;">
+            <div class="pkg-badge">الأكثر طلباً</div>
+            <div>
+                <div class="pkg-title" style="margin-top: 10px;">10 ألعاب</div>
+                <div class="pkg-price">3500 <span>د.ع</span></div>
+                <div class="pkg-desc">10 ألعاب بسعر أوفر - وفّر 1500 </div>
+            </div>
+            <button class="pkg-btn">اشتر الآن</button>
+        </div>
+    </div>
+
+    <!-- 30 لعبة (الأوفر - عرض كامل) -->
+    <div class="pkg-card" style="width: 100%; margin-top: 5px;">
+        <div class="pkg-badge">الأوفر</div>
+        <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; text-align: right; padding: 5px 0;">
+            <div>
+                <div class="pkg-title" style="font-size: 1.4rem;">30 لعبة</div>
+                <div class="pkg-desc" style="margin-bottom: 0;">30 لعبة بسعر مميز - وفّر 7500 </div>
+            </div>
+            <div class="pkg-price" style="font-size: 2.2rem; margin-bottom: 0;">7500 <span style="font-size: 1rem;">د.ع</span></div>
+        </div>
+        <button class="pkg-btn" style="margin-top: 15px;">اشتر الآن</button>
+    </div>
+
+    <!-- فاصل باقات غير محدودة -->
+    <div class="divider-title">باقات غير محدودة</div>
+
+    <!-- باقات غير محدودة (شكل طولي متطابق تماماً مع الصورة الثانية) -->
+    <div class="packages-full">
+        <!-- 3 أيام -->
+        <div class="pkg-card-full">
+            <div class="pkg-badge-side">غير محدود</div>
+            <div style="width: 100%;">
+                <div class="pkg-title">3 أيام</div>
+                <div class="pkg-price">5000 <span>د.ع</span></div>
+                <div class="pkg-desc">٣ أيام كاملة العب بيها شكد متريد</div>
+            </div>
+            <button class="pkg-btn">اشتر الآن</button>
+        </div>
+
+        <!-- أسبوع كامل -->
+        <div class="pkg-card-full">
+            <div class="pkg-badge">الأفضل قيمة</div>
+            <div class="pkg-badge-side" style="top: 20px;">غير محدود</div>
+            <div style="width: 100%;">
+                <div class="pkg-title">أسبوع كامل</div>
+                <div class="pkg-price">8000 <span>د.ع</span></div>
+                <div class="pkg-desc">أسبوع كامل بلا حدود – الأفضل للتجمعات</div>
+            </div>
+            <button class="pkg-btn">اشتر الآن</button>
+        </div>
+    </div>
+</div>

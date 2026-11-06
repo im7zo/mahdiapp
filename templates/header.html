@@ -1,0 +1,18 @@
+<header class="top-header">
+    {% if is_logged_in %}
+        <a href="/profile" class="profile-icon-btn" aria-label="حـسابي">
+            <svg viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </a>
+    {% else %}
+        <a href="/login" class="login-btn">تـسجيل</a>
+    {% endif %}
+
+    <button class="menu-btn" aria-label="القائمة">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</header>

@@ -1,0 +1,228 @@
+<style>
+    @font-face {
+        font-family: 'mrb3';
+        src: url('/font/mrb3.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'kd';
+        src: url('/font/kd.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'l3ba';
+        src: url('/font/l3ba.otf') format('truetype');
+    }
+    
+    /* تنسيق القسم العام */
+    .scrollable-content {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 16px 50px 16px;
+        box-sizing: border-box;
+    }
+
+    /* العنوان الرئيسي */
+    .section-title {
+        font-family: 'l3ba', sans-serif;
+        font-size: 2.3rem;
+        color: #f2eee3; /* لون مأخوذ من تصميم الشريط السفلي */
+        text-shadow: 2px 2px 0px rgba(40, 47, 24);
+        margin-bottom: 5px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* الوصف التحت العنوان */
+    .section-subtitle {
+        font-family: 'l3ba', sans-serif;
+        font-size: 0.95rem;
+        color: #fcf9e8;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        text-align: center;
+        margin-bottom: 10px;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease 0.1s forwards;
+    }
+
+    /* شبكة وسائل المساعدة (عمودين) */
+    .helpers-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease 0.2s forwards;
+    }
+
+    /* البطاقة الأساسية المشتركة */
+    .helper-card {
+        border-radius: 26px;
+        padding: 24px 14px 20px 14px;
+        text-align: center;
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 6px 0px rgba(0,0,0,0.25), 0 10px 20px rgba(0,0,0,0.15);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 190px;
+    }
+
+    /* ألوان البطاقات */
+    .helper-card.dark {
+        background-color: #243015;
+        border: 2.5px solid #11180a;
+        box-shadow: 0 6px 0px #11180a, 0 10px 20px rgba(0,0,0,0.25);
+    }
+
+    .helper-card.light {
+        background-color: #4c663b;
+        border: 2.5px solid #233118;
+        box-shadow: 0 6px 0px #233118, 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    /* تأثير الظل المائل في الزاوية */
+    .helper-card::before {
+        content: '';
+        position: absolute;
+        bottom: -30px;
+        left: -30px;
+        width: 90px;
+        height: 90px;
+        background: rgba(0, 0, 0, 0.15);
+        transform: rotate(45deg);
+        pointer-events: none;
+    }
+
+    /* الأيقونة الدائرية داخل البطاقة (تكون بالبداية) */
+    .helper-icon-circle {
+        width: 54px;
+        height: 54px;
+        background-color: #f7f4d8;
+        border: 2px solid #233118;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+        box-shadow: 0 3px 0px #233118;
+        flex-shrink: 0;
+    }
+
+    .helper-icon-circle svg {
+        width: 26px;
+        height: 26px;
+        fill: none;
+        stroke: #233118;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    /* عنوان الوسيلة (يصبح تحت الأيقونة مباشرة) */
+    .helper-title {
+        font-family: 'mrb3', sans-serif;
+        font-size: 1.2rem;
+        margin-bottom: 6px;
+        color: #ffffff;
+    }
+
+    /* وصف الوسيلة (يكون بالأسفل وواضح تماماً) */
+    .helper-desc {
+        font-family: 'l3ba', sans-serif;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        color: #fcf9e8;
+        font-weight: 600;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<section class="scrollable-content">
+    <h2 class="section-title">وسـائل الـمـساعدة</h2>
+    <p class="section-subtitle">كـل فـريق عنـده ٧ أدوات يكٕدر يسـتخدمها خـلال اللعبة - استـخدمها بذكـاء !</p>
+
+    <div class="helpers-grid">
+        <!-- 1. ابحث (الجديدة) -->
+        <div class="helper-card light">
+            <div class="helper-icon-circle">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <div class="helper-title">ابحث</div>
+            <div class="helper-desc">𝟷𝟻 ثانية تبحث فيها عن الجواب بأي طريقة</div>
+        </div>
+
+        <!-- 2. اتصل بصديق -->
+        <div class="helper-card dark">
+            <div class="helper-icon-circle">
+                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </div>
+            <div class="helper-title">اتصل بصديق</div>
+            <div class="helper-desc">حاجي صاحبك يساعدك قبل ما يخلص الوقت</div>
+        </div>
+
+        <!-- 3. مضاعفة النقاط -->
+        <div class="helper-card light">
+            <div class="helper-icon-circle" style="font-family: 'kd'; font-size: 1.1rem; font-weight: bold; color: #233118;">2x</div>
+            <div class="helper-title">مضاعفة النقاط</div>
+            <div class="helper-desc">ضاعف نقاطك وخليّ الفريق الثاني يندم</div>
+        </div>
+
+        <!-- 4. إجابتين -->
+        <div class="helper-card dark">
+            <div class="helper-icon-circle">
+                <svg viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"></path><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"></path><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"></path><path d="M18 11a4 4 0 0 1 4 4v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"></path></svg>
+            </div>
+            <div class="helper-title">إجابتين</div>
+            <div class="helper-desc">محتار؟ عندك فرصتين بدال وحدة</div>
+        </div>
+
+        <!-- 5. الروليت -->
+        <div class="helper-card light">
+            <div class="helper-icon-circle">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
+            </div>
+            <div class="helper-title">الروليت</div>
+            <div class="helper-desc">دوّر العجلة وشوف حظك - ينفعك أو ينفع خصمك!</div>
+        </div>
+
+        <!-- 6. الحفرة -->
+        <div class="helper-card dark">
+            <div class="helper-icon-circle">
+                <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+            </div>
+            <div class="helper-title">الحفرة</div>
+            <div class="helper-desc">طيّح الخصم بحفرة تخليه يعيد التفكير</div>
+        </div>
+
+        <!-- 7. بلوك -->
+        <div class="helper-card light">
+            <div class="helper-icon-circle">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+            </div>
+            <div class="helper-title">بلوك</div>
+            <div class="helper-desc">اعمل بلوك لخطوتهم الجاية وقفل الطريق</div>
+        </div>
+    </div>
+</section>

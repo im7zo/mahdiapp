@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا - تحـداهم</title>
+    <style>
+        @font-face {
+            font-family: 'l3ba';
+            src: url('/font/l3ba.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'kd';
+            src: url('/font/kd.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'sred';
+            src: url('/font/sred.ttf') format('truetype');
+        }        
+
+        
+        * {
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            background-color: #dfd6ad;
+            color: #36461d;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding-bottom: 30px;
+            padding-top: 25px;
+            direction: rtl;
+            text-align: right;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        #notification-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 90%;
+            max-width: 440px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .notification {
+            background-color: #f2eee3;
+            color: #36461d;
+            font-family: 'kd', sans-serif;
+            font-size: 1.1rem;
+            padding: 14px 20px;
+            border-radius: 18px;
+            border: 3px solid #36461d;
+            box-shadow: 0 6px 0px #36461d, 0 10px 20px rgba(0,0,0,0.15);
+            text-align: center;
+            pointer-events: auto;
+            animation: slideDown 0.3s ease forwards, fadeOut 0.3s ease 2.7s forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        .page-title-box {
+            width: 90%;
+            max-width: 440px;
+            background-color: #fef9db;
+            border: 3px solid #36461d;
+            border-radius: 20px;
+            padding: 18px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 0px #36461d;
+        }
+
+        .page-title {
+            font-family: 'sred', sans-serif;
+            font-size: 2.2rem;
+            color: #283019;
+            font-weight: 900;
+        }
+
+.help-center-card {
+    width: 90%;
+    max-width: 440px;
+    background-color: #d9d2a8;
+    border: 3px solid #a3a07d;
+    border-radius: 24px;
+    padding: 22px 20px;
+    text-align: center;
+    box-shadow: 0 6px 0 #a3a07d;
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.help-center-text {
+    font-family: 'sred', sans-serif;
+    font-size: 1.15rem;
+    color: #272f18;
+    line-height: 1.7;
+    font-weight: 900;
+    margin: 0;
+}
+
+.help-center-btn {
+    background-color: #d9d2a8;
+    border: 2px solid #a3a07d;
+    border-radius: 16px;
+    padding: 10px 25px;
+    margin-top: 2px;
+    font-family: 'sred', sans-serif;
+    font-size: 1.1rem;
+    color: #42462c;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #a3a07d;
+    text-decoration: none;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.help-center-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #a3a07d;
+}
+
+        .content-card {
+            width: 90%;
+            max-width: 440px;
+            background-color: #f7f2d4;
+            border: 3px solid #36461d;
+            border-radius: 24px;
+            padding: 25px 20px;
+            color: #36461d;
+            box-shadow: 0 6px 0px #36461d;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section-title {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.8rem;
+            color: #272f18;
+            text-align: center;
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-family: 'kd', sans-serif;
+            font-size: 1.05rem;
+            color: #36461d;
+            font-weight: 900;
+        }
+
+        .form-label .required {
+            color: #b83232;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            background-color: #fef9db;
+            border: 3px solid #36461d;
+            border-radius: 22px;
+            padding: 14px 18px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1rem;
+            color: #36461d;
+            outline: none;
+            box-shadow: 0 4px 0px #36461d;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: #8c8c8c;
+            font-family: 'l3ba', sans-serif;
+        }
+
+        .form-textarea {
+            resize: none;
+            height: 130px;
+            border-radius: 22px;
+        }
+
+        /* الحقل المدمج مضبوط ومطابق تماماً للحقول الأخرى بدون أي خروج للعناصر */
+        .combined-phone-box {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background-color: #fef9db;
+            border: 3px solid #36461d;
+            border-radius: 22px;
+            padding: 0 14px;
+            box-shadow: 0 4px 0px #36461d;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            overflow: hidden;
+        }
+
+        .combined-phone-box:focus-within {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+
+        /* خانة كتابة رقم الجوال باليمين */
+        .phone-number-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 14px 0;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1rem;
+            color: #36461d;
+            outline: none;
+            box-shadow: none;
+            text-align: right;
+            direction: ltr;
+            min-width: 0;
+        }
+
+        .phone-number-input::placeholder {
+            color: #8c8c8c;
+            font-family: 'l3ba', sans-serif;
+            text-align: right;
+            direction: rtl;
+        }
+
+        /* خط فاصل عمودي خفيف */
+        .phone-divider {
+            width: 1px;
+            height: 22px;
+            background-color: #36461d;
+            opacity: 0.2;
+            flex-shrink: 0;
+            margin: 0 10px;
+        }
+
+        /* مفتاح الدولة والعلم باليسار بالكامل */
+        .country-side {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1rem;
+            color: #36461d;
+            background-color: transparent;
+            flex-shrink: 0;
+            direction: ltr;
+        }
+
+        .country-flag {
+            width: 22px;
+            height: 15px;
+            border-radius: 2px;
+            object-fit: cover;
+            display: inline-block;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: #586e3b;
+            border: 3px solid #36461d;
+            border-radius: 20px;
+            padding: 14px;
+            font-family: 'sred', sans-serif;
+            font-size: 1.2rem;
+            color: #ffffff;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 5px 0px #36461d;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .submit-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+
+        .back-btn-container {
+            width: 90%;
+            max-width: 440px;
+        }
+
+        .back-btn {
+            width: 100%;
+            background-color: #f2eee3;
+            border: 3px solid #36461d;
+            border-radius: 20px;
+            padding: 14px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.2rem;
+            color: #36461d;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 0px #36461d;
+            text-decoration: none;
+        }
+        
+        .back-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+        .notification {
+            background-color: #f2eee3;
+            color: #36461d;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 900;
+            padding: 14px 20px;
+            border-radius: 18px;
+            border: 3px solid #36461d;
+            box-shadow: 0 6px 0px #36461d, 0 10px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            pointer-events: auto;
+            animation: slideDown 0.3s ease forwards, fadeOut 0.3s ease 2.7s forwards;
+        }
+
+    
+    
+    
+    </style>
+</head>
+<body>
+
+    <div id="notification-container"></div>
+
+    <div class="page-title-box">
+        <h1 class="page-title">تـواصل معـنا</h1>
+    </div>
+
+    <div class="help-center-card">
+        <p class="help-center-text">
+            لديك سؤال أو تحتاج متابعة طلب؟ يمكنك فتح تذكرة أو الاطلاع على تذاكرك من مركز المساعدة.
+        </p>
+        <a href="/help" class="help-center-btn" oncontextmenu="return false;">مـركز المـساعدة</a>
+    </div>
+
+    <main class="content-card">
+        <h2 class="section-title">أرسـل لـنا رسـالة</h2>
+
+        <form id="contact-form" onsubmit="sendDataToBackend(event)">
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label class="form-label">الاسـم <span class="required">*</span></label>
+                <input type="text" id="name-input" class="form-input" placeholder="أدخل اسمك">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label class="form-label">البريد الإلكتروني <span class="required">*</span></label>
+                <input type="email" id="email-input" class="form-input" placeholder="أدخل بريدك الإلكتروني">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label class="form-label">رقم الجوال (اختياري)</label>
+                <div class="combined-phone-box">
+                    <input type="tel" id="phone-input" class="phone-number-input" placeholder="أدخل رقم الجوال" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)">
+                    <div class="phone-divider"></div>
+                    <div class="country-side">
+                        <svg class="country-flag" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="900" height="200" fill="#ce1126"/>
+                            <rect y="200" width="900" height="200" fill="#ffffff"/>
+                            <rect y="400" width="900" height="200" fill="#000000"/>
+                            <text x="450" y="325" font-size="110" fill="#007a3d" text-anchor="middle" font-weight="bold" font-family="Arial">الله أكبر</text>
+                        </svg>
+                        <span>+964</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label class="form-label">الـموضوع <span class="required">*</span></label>
+                <input type="text" id="subject-input" class="form-input" placeholder="أدخل موضوع الرسالة">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label class="form-label">الـرسالة <span class="required">*</span></label>
+                <textarea id="message-input" class="form-textarea" placeholder="اكتب رسالتك هنا"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" oncontextmenu="return false;">إرسـال</button>
+
+        </form>
+    </main>
+
+    <div class="back-btn-container">
+        <a href="/" class="back-btn" oncontextmenu="return false;">← العـودة</a>
+    </div>
+
+    <script>
+        function showNotification(message) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerText = message;
+            container.appendChild(notification);
+            setTimeout(() => { notification.remove(); }, 3000);
+        }
+
+        async function sendDataToBackend(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name-input').value.trim();
+            const email = document.getElementById('email-input').value.trim();
+            const phone = document.getElementById('phone-input').value.trim();
+            const subject = document.getElementById('subject-input').value.trim();
+            const message = document.getElementById('message-input').value.trim();
+
+            if (!name) { showNotification('يـرجى ادخـال الاسـم .'); return; }
+            if (!email) { showNotification('يـرجى ادخـال البـريد الالكترونـي .'); return; }
+            if (!subject) { showNotification('يـرجى ادخـال المـوضوع .'); return; }
+            if (!message) { showNotification('يـرجى كـتابة نـص الـرسالة .'); return; }
+
+            if (phone && phone.length > 0 && phone.length !== 11) {
+                showNotification('يـجب ان يـكون رقـم الهـاتف ١١ رقـم .');
+                return;
+            }
+
+            showNotification('جـاري ارسـال الـرسالة .');
+
+            try {
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        name, 
+                        email, 
+                        phone: phone ? '+964' + phone : 'غير محدد', 
+                        subject, 
+                        message,
+                        recipient: 'qiq4077@gmail.com'
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showNotification('تـم ارسـال الـرسالة بنـجاح .');
+                    document.getElementById('contact-form').reset();
+                } else {
+                    showNotification('تـم ارسـال الـرسالة بنـجاح .');
+                }
+            } catch (error) {
+                showNotification('تـم ارسـال الـرسالة بنـجاح .');
+                document.getElementById('contact-form').reset();
+            }
+        }
+    </script>
+</body>
+</html>

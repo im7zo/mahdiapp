@@ -1,0 +1,257 @@
+<style>
+    @font-face {
+        font-family: 'mrb3';
+        src: url('/font/mrb3.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'kd';
+        src: url('/font/kd.ttf') format('truetype');
+    }
+    
+            @font-face {
+            font-family: 'l3ba';
+            src: url('/font/l3ba.otf') format('truetype');
+        }
+
+    /* تنسيق القسم العام ليتوافق مع عرض الشاشة بالكامل */
+    .scrollable-content {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        padding: 20px 16px 40px 16px;
+        box-sizing: border-box;
+    }
+
+    /* عنوان "وش هي اسبقهم؟" بخط kd.ttf ولون الشريط السفلي */
+    .section-title {
+        font-family: 'l3ba', sans-serif;
+        font-size: 2.3rem;
+        color: #f2eee3; /* لون مأخوذ من تصميم الشريط السفلي */
+        text-shadow: 2px 2px 0px rgba(40, 47, 24);
+        margin-bottom: 5px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /* البطاقة الأولى */
+    .info-card-hero {
+        width: 100%;
+        background-color: #4c663b;
+        border: 3px solid #233118;
+        border-radius: 28px;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 8px 0px #233118, 0 12px 25px rgba(0,0,0,0.18);
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease 0.2s forwards;
+    }
+
+    .info-card-hero::before {
+        content: '';
+        position: absolute;
+        bottom: -35px;
+        left: -35px;
+        width: 110px;
+        height: 110px;
+        background: rgba(0, 0, 0, 0.1);
+        transform: rotate(45deg);
+        pointer-events: none;
+    }
+
+    /* الأيقونة الدائرية */
+    .card-icon-circle {
+        width: 64px;
+        height: 64px;
+        background-color: #f7f4d8;
+        border: 2.5px solid #233118;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 18px auto;
+        box-shadow: 0 4px 0px #233118;
+    }
+
+    .card-icon-circle svg {
+        width: 30px;
+        height: 30px;
+        fill: none;
+        stroke: #233118;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .info-card-hero p {
+        font-size: 1.12rem;
+        line-height: 1.75;
+        font-family: 'l3ba', sans-serif;
+        font-weight: 600;
+        color: #fcf9e8;
+    }
+
+    /* البطاقة الثانية */
+    .info-card-how {
+        width: 100%;
+        background-color: #243015;
+        border: 3px solid #11180a;
+        border-radius: 28px;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 8px 0px #11180a, 0 12px 25px rgba(0,0,0,0.25);
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease 0.4s forwards;
+    }
+
+    .info-card-how::before {
+        content: '';
+        position: absolute;
+        bottom: -35px;
+        left: -35px;
+        width: 110px;
+        height: 110px;
+        background: rgba(0, 0, 0, 0.22);
+        transform: rotate(45deg);
+        pointer-events: none;
+    }
+
+    .info-card-how p {
+        font-size: 1.12rem;
+        line-height: 1.75;
+        font-family: 'l3ba', sans-serif;
+        font-weight: 600;
+        color: #fcf9e8;
+        margin-bottom: 12px;
+    }
+
+    .info-card-how .highlight-text {
+        font-family: 'mrb3', sans-serif;
+        font-size: 1.25rem;
+        color: #ffd868;
+        margin-top: 8px;
+    }
+
+    /* شبكة الإحصائيات */
+    .stats-grid {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 10px;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s ease 0.6s forwards;
+    }
+
+    .stat-card {
+        background-color: #f7f4d8;
+        border: 3px solid #233118;
+        border-radius: 20px;
+        padding: 16px 10px;
+        text-align: center;
+        box-shadow: 0 5px 0px #233118;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 100px;
+    }
+
+    .stat-number {
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 2.2rem;
+        font-weight: 900;
+        color: #1d2613;
+        line-height: 1.1;
+        margin-bottom: 4px;
+        direction: ltr;
+    }
+
+    .stat-text {
+        font-family: 'l3ba', sans-serif;
+        font-size: 0.92rem;
+        color: #1d2613;
+        font-weight: 800;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .section-title-zz {
+        font-family: 'l3ba', sans-serif;
+        font-size: 2.3rem;
+        color: #f2eee3; /* لون مأخوذ من تصميم الشريط السفلي */
+        text-shadow: 2px 2px 0px rgba(40, 47, 24);
+        margin-bottom: 5px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+</style>
+
+<section class="scrollable-content">
+    <h2 class="section-title-zz">هـيَ شـنو تحـداهم؟</h2>
+
+    <!-- البطاقة الأولى -->
+    <div class="info-card-hero">
+        <div class="card-icon-circle">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><circle cx="15.5" cy="15.5" r="1.5"></circle><circle cx="12" cy="12" r="1.5"></circle></svg>
+        </div>
+        <p>لعـبة عـراقية تجـمع قـروبك الـي مايجـتمع الا كـل سـنه وتتـونسون وتسـتفيدون مـن المـعلومات وتـزيد ثقافـتكم .</p>
+    </div>
+
+    <!-- البطاقة الثانية -->
+    <div class="info-card-how">
+        <div class="card-icon-circle">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
+        <p>اجـتمع مـع قـروبك وادخـلو قـيم سـريع فـيه 𝟼 فئـات تضـم 𝟹𝟼 سـؤال، ومـعها 𝟹 وسـائل مسـاعدة لـكل فـريق .</p>
+        <div class="highlight-text">جَـمّع فـريقك هسـة وابـدا التـحدي!</div>
+    </div>
+
+    <!-- قسم الإحصائيات -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">𝟷𝟶𝟶𝚔 +</div>
+            <div class="stat-text">سـؤال متنـوع</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-number">𝟷𝟸𝟶</div>
+            <div class="stat-text">فـئات مختلفة</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">+ 𝟹𝟶 </div>
+            <div class="stat-text">دقـيقة مـن المرح</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-number">𝟹</div>
+            <div class="stat-text">وسائـل مسـاعدة</div>
+        </div>
+    </div>
+</section>

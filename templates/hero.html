@@ -1,0 +1,102 @@
+<style>
+    /* 1. الحاوية الخاصة بالأزرار (عمودي في الجوال) */
+    .buttons-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    /* 2. تصميم الزر الأساسي (مع إضافة أنميشن الضغط) */
+    .action-btn {
+        position: relative;
+        background-color: #fdfcf0;
+        color: #3a4a27;
+        border: 2.5px solid #36461d;
+        padding: 15px 40px;
+        border-radius: 50px;
+        font-size: 1.4rem;
+        font-weight: 700;
+        cursor: pointer;
+        width: 100%;
+        max-width: 350px;
+        box-shadow: 0 6px 0 #36461d;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+        /* إضافة الانتقال السلس للأنميشن */
+        transition: transform 0.08s ease, box-shadow 0.08s ease;
+    }
+
+    /* أنميشن الحركة عند الضغط */
+    .action-btn:active {
+        transform: translateY(4px);
+        box-shadow: 0 2px 0 #36461d;
+    }
+
+    /* 3. تصميم شارة جديد (متمركزة في منتصف أعلى الزر) */
+    .badge-new {
+        position: absolute;
+        top: -13px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #ffc107;
+        color: #111111;
+        font-size: 0.75rem;
+        font-weight: 900;
+        padding: 2px 14px;
+        border-radius: 10px;
+        border: 2px solid #36461d;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    /* 4. التحول للوضع الأفقي في الأجهزة اللوحية (آيباد) واللابتوب */
+    @media (min-width: 768px) {
+        .buttons-container {
+            flex-direction: row;
+            justify-content: center;
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .action-btn {
+            width: auto;
+            min-width: 180px;
+            font-size: 1.6rem;
+            padding: 18px 45px;
+        }
+    }
+</style>
+
+<main class="hero-section">
+    <div class="game-logo-container">
+        <h1 class="game-title">تحـداهم</h1>
+    </div>
+
+    <p class="game-desc">
+        لعبة عـراقية تجمع المتعة والمنافسة والمعرفة في تجربة واحدة<br>
+        جاهز تختبر معلوماتك وتسبقهم؟
+    </p>
+
+    <div class="buttons-container">
+        <a href="{{ '/play' if is_logged_in else '/login' }}" class="action-btn">ابدأ اللعب</a>
+        
+        <a href="/community" class="action-btn">
+            <span class="badge-new">جـديد</span>
+            المجتمع
+        </a>
+        
+        <a href="{{ '/create-tournament' if is_logged_in else '/login' }}" class="action-btn">
+            <span class="badge-new">جـديد</span>
+            انشاء بطولة
+        </a>
+    </div>
+</main>

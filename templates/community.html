@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اسبـقـهـم - الـمجتمع</title>
+    <style>
+        @font-face {
+            font-family: 'l3ba';
+            src: url('/font/l3ba.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'sred';
+            src: url('/font/sred.ttf') format('truetype');
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            font-family: 'l3ba', sans-serif;
+        }
+
+        body {
+            background-color: #556b3b;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px 16px 40px 16px;
+        }
+
+        .page-wrapper {
+            width: 100%;
+            max-width: 440px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        /* نظام الإشعارات العلوية (Toast) */
+        #notification-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 90%;
+            max-width: 400px;
+            pointer-events: none;
+        }
+
+        .notification {
+            background-color: #f2eee3;
+            color: #36461d;
+            font-family: 'sred', sans-serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 14px 20px;
+            border-radius: 18px;
+            border: 3px solid #36461d;
+            box-shadow: 0 5px 0px #36461d, 0 10px 20px rgba(0,0,0,0.15);
+            text-align: center;
+            pointer-events: auto;
+            animation: slideDown 0.3s ease forwards, fadeOut 0.3s ease 2.7s forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* رأس الصفحة */
+        .header-section {
+            text-align: center;
+            margin-bottom: 22px;
+            width: 100%;
+        }
+
+        .main-title {
+            font-family: 'sred', sans-serif;
+            font-size: 3.5rem;
+            color: #ffffff;
+            font-weight: 900;
+            text-shadow: 3px 3px 0px #36461d, 0 10px 20px rgba(0,0,0,0.2);
+            margin-bottom: 8px;
+            line-height: 1.1;
+        }
+
+        .sub-title {
+            font-family: 'sred', sans-serif;
+            font-size: 1.65rem;
+            color: #ffffff;
+            font-weight: 900;
+            text-shadow: 1px 1px 0px #36461d;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .description-text {
+            font-family: 'l3ba', sans-serif;
+            font-size: 1rem;
+            color: #e2ebd7;
+            line-height: 1.6;
+            font-weight: 600;
+            padding: 0 10px;
+        }
+
+        /* الأزرار الرئيسية */
+        .buttons-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .back-btn {
+            width: 100%;
+            background-color: #f2eee3;
+            border: 3px solid #36461d;
+            border-radius: 20px;
+            padding: 13px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 1.2rem;
+            color: #36461d;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 5px 0px #36461d;
+            text-decoration: none;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .back-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+
+        .back-btn.dark-transparent {
+            background-color: rgba(54, 70, 29, 0.5);
+            border: 3px solid rgba(54, 70, 29, 0.8);
+            color: #ffffff;
+            box-shadow: 0 5px 0px rgba(35, 49, 24, 0.5);
+        }
+
+        .back-btn.dark-transparent:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0px rgba(35, 49, 24, 0.5);
+            background-color: rgba(54, 70, 29, 0.7);
+        }
+
+        /* الإطار المربع الخلفي الحاضن للبطاقات */
+        .preview-outer-box {
+            width: 100%;
+            background-color: rgba(242, 238, 227, 0.15);
+            border: 3px solid rgba(242, 238, 227, 0.3);
+            border-radius: 32px;
+            padding: 24px 16px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.1);
+            margin-top: 5px;
+        }
+
+        /* حاوية البطاقات المائلة والمتداخلة */
+        .cards-tilt-container {
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        /* البطاقة الأولى (فكرتك - بالخلف مع الميلان المطلوب) */
+        .preview-card-top {
+            width: 95%;
+            background-color: #f2eee3;
+            border: 3px solid #36461d;
+            border-radius: 24px;
+            padding: 16px;
+            position: relative;
+            box-shadow: 0 8px 0px #36461d, 0 15px 25px rgba(0,0,0,0.2);
+            z-index: 1;
+            transform: rotate(-2.5deg);
+            margin-bottom: -32px;
+        }
+
+        .preview-card-top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .preview-title-group {
+            text-align: left;
+        }
+
+        .preview-category-label {
+            font-family: 'sred', sans-serif;
+            font-size: 1.1rem;
+            color: #36461d;
+            font-weight: 900;
+        }
+
+        .preview-main-heading {
+            font-family: 'sred', sans-serif;
+            font-size: 1.35rem;
+            color: #36461d;
+            font-weight: 900;
+        }
+
+        .preview-icon-circle {
+            width: 40px;
+            height: 40px;
+            background-color: #f2eee3;
+            border: 2.5px solid #36461d;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 3px 0px #36461d;
+        }
+
+        .svg-icon {
+            width: 20px;
+            height: 20px;
+            fill: #36461d;
+        }
+
+        .preview-content-box {
+            background-color: #fbf6ec;
+            border: 2.5px solid #36461d;
+            border-radius: 16px;
+            padding: 10px;
+            text-align: right;
+        }
+
+        .preview-example-text {
+            font-family: 'sred', sans-serif;
+            font-size: 0.95rem;
+            color: #36461d;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .preview-badges-row {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .preview-badge {
+            background-color: #eee9d8;
+            padding: 3px 9px;
+            border-radius: 10px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 0.75rem;
+            color: #36461d;
+            font-weight: bold;
+            border: 1.5px solid #36461d;
+        }
+
+        /* زر السهم الدائري الفاصل - تم توسيط السهم بداخله تماماً باستخدام Flexbox */
+        .preview-arrow-divider {
+            width: 44px;
+            height: 44px;
+            background-color: rgba(54, 70, 29, 0.65); /* شفافة مثل الزر الثالث */
+            border: 3px solid rgba(35, 49, 24, 0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            box-shadow: 0 4px 0px rgba(35, 49, 24, 0.6), 0 6px 12px rgba(0,0,0,0.15);
+            margin: 0 auto; /* بالمنتصف تماماً */
+            position: relative;
+            top: -6px;
+        }
+
+        .preview-arrow-divider span {
+            font-size: 1.2rem;
+            color: #ffffff;
+            font-weight: 900;
+            line-height: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            transform: none;
+        }
+
+        /* البطاقة الثانية (أرباحك - بالأمام مع الميلان المطلوب) */
+        .preview-card-bottom {
+            width: 95%;
+            background-color: #f2eee3;
+            border: 3px solid #36461d;
+            border-radius: 24px;
+            padding: 16px;
+            position: relative;
+            box-shadow: 0 8px 0px #36461d, 0 15px 25px rgba(0,0,0,0.25);
+            z-index: 5;
+            transform: rotate(3.5deg);
+            margin-top: -38px;
+        }
+
+        .preview-bottom-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .preview-profits-title {
+            font-family: 'sred', sans-serif;
+            font-size: 1.1rem;
+            color: #36461d;
+            font-weight: 900;
+            text-align: left;
+        }
+
+        .preview-profits-amount {
+            font-family: 'sred', sans-serif;
+            font-size: 1.7rem;
+            color: #36461d;
+            font-weight: 900;
+        }
+
+        .preview-dollar-circle {
+            width: 40px;
+            height: 40px;
+            background-color: #36461d;
+            border: 2.5px solid #233118;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 3px 0px #233118;
+            color: #f2eee3;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .preview-progress-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            font-family: 'l3ba', sans-serif;
+            font-size: 0.8rem;
+            color: #36461d;
+            font-weight: bold;
+        }
+
+        .preview-progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background-color: #fbf6ec;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1.5px solid #36461d;
+        }
+
+        .preview-progress-bar-fill {
+            width: 65%;
+            height: 100%;
+            background-color: #36461d;
+            border-radius: 3px;
+        }
+
+        /* الشروط والأحكام في الأسفل */
+        .footer-terms {
+            font-family: 'l3ba', sans-serif;
+            font-size: 0.8rem;
+            color: #d2dfc4;
+            text-align: center;
+            line-height: 1.7;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 22px;
+        }
+
+        .footer-terms a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="notification-container"></div>
+
+    <div class="page-wrapper">
+        <div class="header-section">
+            <h1 class="main-title">اسـبقهـم</h1>
+            <h2 class="sub-title">فكرتك اليوم، أرباحك مع كل لعبة</h2>
+            <p class="description-text">اصنع فئة وأسئلة من إبداعك. واطلقها للجميع, وحول اللعبه إلى أرباح محسوبة لك</p>
+        </div>
+
+        <div class="buttons-container">
+            <button class="back-btn" onclick="showNotification('قريـباً سيـتم إضـافته، تـحت التـطوير حالـياً .')">ابـدأ بفـكرتك</button>
+            <button class="back-btn" onclick="showNotification('قريـباً سيـتم إضـافته، تـحت التـطوير حالـياً .')">ادخـل الورشـة</button>
+            <button class="back-btn dark-transparent" onclick="showNotification('قريـباً سيـتم إضـافته، تـحت التـطوير حالـياً .')">معـايير فـئات المجـتمع</button>
+        </div>
+
+        <div class="preview-outer-box">
+            <div class="cards-tilt-container">
+                <div class="preview-card-top">
+                    <div class="preview-card-top-header">
+                        <div class="preview-title-group">
+                            <div class="preview-category-label">فكرتك</div>
+                            <div class="preview-main-heading">فئة من إبداعك</div>
+                        </div>
+                        <div class="preview-icon-circle">
+                            <svg class="svg-icon" viewBox="0 0 24 24">
+                                <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7zM9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="preview-content-box">
+                        <div class="preview-example-text">مـثال : تاريخ الجمـهورية العـراقية</div>
+                        <div class="preview-badges-row">
+                            <span class="preview-badge">٦ أسئلة</span>
+                            <span class="preview-badge">٣ مستويات</span>
+                            <span class="preview-badge">جاهزة للعب</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-arrow-divider">
+                    <span>→</span>
+                </div>
+
+                <div class="preview-card-bottom">
+                    <div class="preview-bottom-header">
+                        <div>
+                            <div class="preview-profits-title">أرباحك</div>
+                            <div class="preview-profits-amount">+5000 د.ع</div>
+                        </div>
+                        <div class="preview-dollar-circle">$</div>
+                    </div>
+                    <div class="preview-progress-footer">
+                        <span>كل لعبة مدفوعة</span>
+                        <span>تنحسب تلقائياً</span>
+                    </div>
+                    <div class="preview-progress-bar-bg">
+                        <div class="preview-progress-bar-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-terms">
+            بمجرد بدء استخدامك للمجتمع، فإنك توافق على <a href="#" onclick="event.preventDefault(); showNotification('قريـباً سيـتم إضـافته، تـحت التـطوير حالـياً .');">الشروط والأحكام</a> و <a href="#" onclick="event.preventDefault(); showNotification('قريـباً سيـتم إضـافته، تـحت التـطوير حالـياً .');">شروط وأحكام المجتمع</a>.
+        </div>
+    </div>
+
+    <script>
+        function showNotification(message) {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerText = message;
+            container.appendChild(notification);
+            
+            setTimeout(() => { 
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                notification.style.transition = 'all 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 2700);
+        }
+    </script>
+</body>
+</html>

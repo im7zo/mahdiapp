@@ -1,0 +1,159 @@
+<style>
+    @font-face {
+        font-family: 'mrb3';
+        src: url('/font/mrb3.ttf') format('truetype');
+    }
+    @font-face {
+        font-family: 'kd';
+        src: url('/font/kd.otf') format('truetype');
+    }
+    @font-face {
+        font-family: 'l3ba';
+        src: url('/font/l3ba.otf') format('truetype');
+    }
+
+    /* إلغاء المربع الأزرق عند الضغط في الهواتف لكل العناصر */
+    * {
+        -webkit-tap-highlight-color: transparent;
+        box-sizing: border-box;
+    }
+
+    /* توسيع القسم العام ليأخذ عرض 98% وتخلص الانكماش */
+    .home-content {
+        width: 98%;
+        max-width: 780px; /* تم توسيع الحد الأقصى ليناسب شاشات الموبايل بشكل أريح */
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 5px 10px 40px 10px;
+    }
+
+    /* الشريط الفاصل في بداية الصفحة */
+    .top-divider {
+        width: 90%;
+        max-width: 500px;
+        height: 3px;
+        background-color: rgba(242, 238, 227, 0.4);
+        border-radius: 2px;
+        margin: 5px 0 25px 0;
+    }
+
+    /* الأيقونة الدائرية العلوية */
+    .home-icon-circle {
+        width: 76px;
+        height: 76px;
+        background-color: #556b3c;
+        border: 3px solid #36461d;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 0px #36461d, 0 8px 15px rgba(0,0,0,0.15);
+    }
+
+    .home-icon-circle svg {
+        width: 36px;
+        height: 36px;
+        fill: none;
+        stroke: #f5f2e0;
+        stroke-width: 2.4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    /* العنوان الرئيسي (جاهز للتحدي؟) */
+    .home-title {
+        font-family: 'kd', sans-serif;
+        font-size: 2.8rem;
+        color: #ffffff;
+        text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.3);
+        margin-bottom: 12px;
+        font-weight: 900;
+    }
+
+    /* الوصف التحت العنوان */
+    .home-desc {
+        font-family: 'l3ba', sans-serif;
+        font-size: 1.15rem;
+        line-height: 1.6;
+        color: #36461d;
+        margin-bottom: 35px;
+        font-weight: 700;
+        max-width: 550px; /* توسيع عرض النص ليكون مريحاً للعين */
+    }
+
+    /* حاوية الأزرار */
+    .home-buttons {
+        width: 100%;
+        max-width: 500px; /* توسيع حاوية الأزرار لتتناسب مع الشاشة */
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    /* زر ابدأ اللعب (أخضر غامق) */
+    .btn-primary-game {
+        width: 100%;
+        background-color: #435427;
+        color: #f5f2e0;
+        border: 2.5px solid #233118;
+        padding: 16px 20px;
+        border-radius: 24px;
+        font-family: 'kd', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: 0 6px 0px #233118, 0 10px 15px rgba(0,0,0,0.15);
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        transition: transform 0.1s ease;
+    }
+
+    /* زر تعرف على القواعد (بيج فاتح) */
+    .btn-secondary-rules {
+        width: 100%;
+        background-color: #f5f2e0;
+        color: #36461d;
+        border: 2.5px solid #36461d;
+        padding: 16px 20px;
+        border-radius: 24px;
+        font-family: 'kd', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 900;
+        cursor: pointer;
+        box-shadow: 0 6px 0px #36461d, 0 10px 15px rgba(0,0,0,0.15);
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        transition: transform 0.1s ease;
+    }
+
+    .btn-primary-game:active, .btn-secondary-rules:active {
+        transform: translateY(3px);
+        box-shadow: 0 3px 0px #233118, 0 5px 8px rgba(0,0,0,0.1);
+    }
+</style>
+
+<div class="home-content">
+    <!-- الشريط الفاصل في بداية الصفحة -->
+    <div class="top-divider"></div>
+
+    <!-- الأيقونة الدائرية -->
+    <div class="home-icon-circle">
+        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+    </div>
+
+    <!-- العنوان والنص -->
+    <h1 class="home-title">جـاهز للتـحدي؟</h1>
+    <p class="home-desc">جمّع فريقك واستمتعوا بتجربة غنية من المعرفة والتحدي والمرح مع لعبة اسبقهم!</p>
+
+    <!-- الأزرار -->
+    <div class="home-buttons">
+        <a href="#" class="btn-primary-game">ابـدء اللعب</a>
+        <a href="/alkoa3d" class="btn-secondary-rules">تعـرف على القـواعد</a>
+    </div>
+</div>

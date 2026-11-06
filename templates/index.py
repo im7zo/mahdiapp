@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحـداهم - لعـبتك العـراقية الاولى</title>
+    <style>
+        /* تعريف الخطوط من مجلد font */
+        @font-face {
+            font-family: 'kd';
+            src: url('/font/kd.otf') format('truetype');
+        }
+        @font-face {
+            font-family: 'sred';
+            src: url('/font/sred.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'l3ba';
+            src: url('/font/l3ba.otf') format('truetype');
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #586e3b;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-bottom: 140px;
+        }
+
+        /* تنسيقات الهيدر */
+        .top-header {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            flex-shrink: 0;
+        }
+        .menu-btn {
+            background-color: #f2eee3;
+            border: 2px solid #36461d;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 0px #36461d;
+        }
+        .menu-btn span {
+            display: block;
+            width: 20px;
+            height: 2.5px;
+            background-color: #36461d;
+            border-radius: 2px;
+        }
+
+        .login-btn {
+            background-color: #f2eee3;
+            color: #2c2c2c;
+            border: 2px solid #36461d;
+            padding: 10px 24px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-family: 'kd', sans-serif;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 0px #36461d;
+            text-decoration: none; 
+            display: inline-block; 
+            position: relative; 
+            transition: transform 0.05s ease, box-shadow 0.05s ease; 
+        }
+
+        .login-btn:active {
+            transform: translateY(4px); 
+            box-shadow: 0 0px 0px #36461d; 
+        }
+
+        .profile-icon-btn {
+            background-color: #f2eee3;
+            color: #2c2c2c;
+            border: 2px solid #36461d;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 0px #36461d;
+            text-decoration: none;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .profile-icon-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #36461d;
+        }
+
+        .profile-icon-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: #36461d;
+            stroke-width: 2.2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* تنسيقات الصفحة الأولى (Hero) */
+        .hero-section {
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            padding: 5px 20px;
+            flex-shrink: 0;
+        }
+        .game-logo-container {
+            margin: 10px 0 20px 0;
+            display: inline-block;
+            transform: rotate(4deg);
+        }
+        .game-title {
+            font-size: 4.2rem;
+            font-family: 'l3ba', sans-serif;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 4px 4px 0px #36461d, 6px 6px 0px rgba(0,0,0,0.2);
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+        .game-desc {
+            font-size: 1.1rem;
+            font-family: 'l3ba', sans-serif;
+            line-height: 1.6;
+            color: #f2eee3;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        .buttons-container {
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            padding: 0 10px;
+        }
+        .action-btn {
+            position: relative;
+            width: 100%;
+            background-color: #f5f2e0;
+            color: #1a1a1a;
+            border: 2.5px solid #36461d;
+            padding: 14px 20px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-family: 'kd', sans-serif;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 5px 0px #36461d, 0 8px 12px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .badge-new {
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f4b41a;
+            color: #111111;
+            font-size: 0.75rem;
+            font-family: 'kd', sans-serif;
+            font-weight: 900;
+            padding: 2px 14px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 2px solid #36461d;
+        }
+
+        /* تنسيقات الصفحة الثانية (Scroll Section) */
+        .scrollable-content {
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 40px 20px 20px 20px;
+        }
+        .section-title {
+            font-family: 'l3ba', sans-serif;
+            font-size: 2.2rem;
+            color: #ffffff;
+            text-shadow: 2px 2px 0px #36461d;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .info-card {
+            width: 100%;
+            background-color: #4a5d31;
+            border: 2.5px solid #2d381c;
+            border-radius: 24px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 6px 0px #2d381c, 0 10px 15px rgba(0,0,0,0.2);
+            color: #ffffff;
+            font-family: 'l3ba', sans-serif;
+        }
+        .info-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        .info-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #f2eee3;
+        }
+
+        /* نظام التبديل بين العروض (Views) */
+        .app-view {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+        .app-view.active-view {
+            display: flex;
+        }
+
+        /* الشريط السفلي الثابت (يتم جلبه من nav.html) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 94%;
+            max-width: 440px;
+            background-color: #f5f2e0;
+            border-radius: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 10px;
+            border: 3px solid #36461d;
+            box-shadow: 0 8px 0px #36461d, 0 12px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+        .nav-item {
+            text-decoration: none;
+            color: #55503c;
+            font-size: 0.9rem;
+            font-family: 'sred', sans-serif;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: #55503c;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .nav-item.active {
+            background-color: #f5f2e0;
+            color: #1a1a1a;
+            font-weight: 900;
+            border: 3px solid #36461d;
+            box-shadow: 0 4px 0px #36461d;
+            padding: 8px 14px; 
+            transform: translateY(-2px);
+        }
+        .nav-item.active svg {
+            stroke: #1a1a1a;
+            stroke-width: 2.2;
+        }
+    </style>
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <div id="home-view" class="app-view active-view">
+        {% include 'hero.html' %}
+        {% include 'about.html' %}
+        {% include 'l3ba.html' %}
+        {% include 'as3ar.html' %}
+        {% include 't3rf.html' %}
+        {% include 'm3lomat.html' %}
+    </div>
+
+    <div id="create-view" class="app-view">
+        {% include 'l3ba.html' %}
+    </div>
+
+    <div id="balance-view" class="app-view">
+        {% include 'df3.html' %}
+    </div>
+
+    <div id="profile-view" class="app-view">
+        {% include 'profile3.html' %}
+    </div>
+
+    {% include 'nav.html' %}
+
+    <script>
+        function switchView(viewId, element) {
+            // إخفاء جميع العروض الحالية
+            document.querySelectorAll('.app-view').forEach(view => {
+                view.classList.remove('active-view');
+            });
+
+            // إظهار العرض المطلوب فقط
+            const targetView = document.getElementById(viewId);
+            if (targetView) {
+                targetView.classList.add('active-view');
+            }
+
+            // نقل المربع البارز (active) إلى الزر المضغوط حصراً
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            if (element) {
+                element.classList.add('active');
+            }
+
+            // إعادة توجيه الشاشة للأعلى بسلاسة
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
